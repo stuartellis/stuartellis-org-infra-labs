@@ -10,8 +10,8 @@ ST_STACKS_DEFS_DIR	:= $(PROJECT_DIR)/terraform1/stacks/definitions
 TF_ROOT       := $(ST_STACKS_DEFS_DIR)/$(STACK_NAME)
 TF_PLAN_CACHE	:= $(TF_ROOT)/plan.cache
 TF_PLAN_JSON	:= $(TF_ROOT)/plan.json 
-TF_STATE_NAME	:= $(ENVIRONMENT)-$(STACK_NAME)-$(STACK_VARIANT)
-TF_VARS_OPT	  := -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)" -var="variant=$(STACK_VARIANT)"
+TF_STATE_NAME	:= $(PRODUCT_NAME)-$(ENVIRONMENT)-$(STACK_NAME)-$(STACK_VARIANT)
+TF_VARS_OPT	  := -var="product_name=$(PRODUCT_NAME)" stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)" -var="variant=$(STACK_VARIANT)"
 
 ##  Variables for GitLab ##
 

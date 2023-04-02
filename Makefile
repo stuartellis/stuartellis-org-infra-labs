@@ -14,4 +14,6 @@ MAKEFLAGS += --no-builtin-rules
 PROJECT_DIR				:= $(shell pwd)
 ENVIRONMENT				?= dev
 
+PRODUCT_NAME			:= labs
+
 include make/terraform/*.mk
