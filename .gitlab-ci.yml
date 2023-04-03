@@ -1,5 +1,22 @@
 stages:
+- build
 - test
 
-include:
-  - template: Jobs/SAST-IaC.gitlab-ci.yml
+generate-config:
+  image: alpine:3.17.3
+  stage: build
+  before_script:
+    - apk add make
+  script: 
+    - make pipegen-get-ytt
+    - make pipegen-build
+  artifacts:
+    paths:
+      - tmp/generated-config.yml # FIXME: Check path
+
+# dynamic-test:
+#   stage: test
+#   trigger:
+#     include:
+#       - artifact: generated-config.yml
+#         job: generate-config
