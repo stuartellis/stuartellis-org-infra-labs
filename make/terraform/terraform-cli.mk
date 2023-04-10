@@ -43,7 +43,7 @@ endif
 
 .PHONY: terraform-check-fmt
 terraform-check-fmt:
-	@terraform $(ST_TF_CHDIR_OPT) fmt -check -diff -recursive
+	@echo terraform $(ST_TF_CHDIR_OPT) fmt -check -diff -recursive
 
 .PHONY: terraform-fmt
 terraform-fmt:

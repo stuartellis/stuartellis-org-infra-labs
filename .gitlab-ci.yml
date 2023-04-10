@@ -8,11 +8,11 @@ generate-pipeline:
   before_script:
     - apk add make
   script: 
-    # - make pipegen-get-ytt
+    - make pipegen-get-ytt
     - make pipegen-build
   artifacts:
     paths:
-      - tmp/pipegen/.gitlab-ci.yml # FIXME: Check path
+      - tmp/pipegen/.gitlab-ci.yml
 
 dynamic-test:
   stage: test
