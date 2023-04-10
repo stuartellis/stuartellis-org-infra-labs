@@ -3,7 +3,9 @@ stages:
 - test
 
 variables:
+  STACK_NAME: infra_canary
   PIPEGEN_TASK: check-terraform
+  CHECK_TERRAFORM_STACK_NAME: $STACK_NAME
 
 generate-pipeline:
   image: alpine:3.17.3

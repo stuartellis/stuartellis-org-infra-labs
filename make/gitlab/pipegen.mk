@@ -6,7 +6,8 @@ PIPEGEN_TARGET_ROOT_DIR := tmp/pipegen
 
 ## User Options
 
-PIPEGEN_TASK 				?= dummy
+PIPEGEN_TASK 				?= pipegen
+PIPEGEN_VARS_PREFIX			?= $(shell echo $(PIPEGEN_TASK) | tr '[:lower:]' '[:upper:]' | tr - _)
 
 ## Calculated variables
 
@@ -26,4 +27,8 @@ pipegen-get-ytt:
 .PHONY: pipegen-build
 pipegen-build:
 	mkdir -p $(PIPEGEN_TARGET_OUTPUT_DIR)
-	ytt -f $(PIPEGEN_TEMPLATE_SRC_PATH) --output-files $(PIPEGEN_TARGET_OUTPUT_DIR)
+	ytt -f $(PIPEGEN_TEMPLATE_SRC_PATH) --data-values-env $(PIPEGEN_VARS_PREFIX) --output-files $(PIPEGEN_TARGET_OUTPUT_DIR)
+
+.PHONY: pipegen-info
+pipegen-info:
+	@echo "Environment variable prefix: $(PIPEGEN_VARS_PREFIX)"

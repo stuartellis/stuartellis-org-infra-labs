@@ -1,3 +1,5 @@
+#@ load("@ytt:data","data")
+
 stages:
 - check
 
@@ -9,4 +11,4 @@ check:
   script: 
     - make terraform-check-fmt
   variables:
-    STACK_NAME: infra_canary
+    STACK_NAME: #@ data.values.STACK_NAME
