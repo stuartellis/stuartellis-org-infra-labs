@@ -11,4 +11,4 @@ pipegen-get-ytt:
 .PHONY: pipegen-build
 pipegen-build:
 	mkdir -p $(PIPEGEN_TARGET_DIR)
-	cp $(PIPEGEN_TEMPLATE_ROOT_DIR)/check/terraform/.gitlab-ci.yml > $(PIPEGEN_TARGET_DIR)/.gitlab-ci.yml
+	cp $(PIPEGEN_TEMPLATE_ROOT_DIR)/check/terraform/.gitlab-ci.yml $(PIPEGEN_TARGET_DIR)/.gitlab-ci.yml
