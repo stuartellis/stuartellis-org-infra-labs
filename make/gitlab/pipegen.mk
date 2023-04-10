@@ -1,6 +1,6 @@
 
 PIPEGEN_TEMPLATE_ROOT_DIR := .gitlab/ci/templates
-PIPEGEN_TARGET_DIR := tmp/pipegen/
+PIPEGEN_TARGET_DIR := tmp/pipegen
 
 ## Targets ##
 

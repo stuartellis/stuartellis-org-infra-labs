@@ -8,7 +8,7 @@ generate-pipeline:
   before_script:
     - apk add make
   script: 
-    - make pipegen-get-ytt
+    # - make pipegen-get-ytt
     - make pipegen-build
   artifacts:
     paths:
