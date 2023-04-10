@@ -2,6 +2,9 @@ stages:
 - build
 - test
 
+variables:
+  PIPEGEN_TASK: check-terraform
+
 generate-pipeline:
   image: alpine:3.17.3
   stage: build
@@ -12,11 +15,11 @@ generate-pipeline:
     - make pipegen-build
   artifacts:
     paths:
-      - tmp/pipegen/.gitlab-ci.yml
+      - tmp/pipegen/$PIPEGEN_TASK/.gitlab-ci.yml
 
 dynamic-test:
   stage: test
   trigger:
     include:
-      - artifact: tmp/pipegen/.gitlab-ci.yml
+      - artifact: tmp/pipegen/$PIPEGEN_TASK/.gitlab-ci.yml
         job: generate-pipeline
