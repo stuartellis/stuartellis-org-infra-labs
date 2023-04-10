@@ -1,4 +1,7 @@
 
+PIPEGEN_TEMPLATE_ROOT_DIR := .gitlab/ci/templates
+PIPEGEN_TARGET_DIR := tmp/pipegen/
+
 ## Targets ##
 
 .PHONY: pipegen-get-ytt
@@ -7,4 +10,4 @@ pipegen-get-ytt:
 
 .PHONY: pipegen-build
 pipegen-build:
-	echo "Hello world" > tmp/generated-config.yml
+	cp $(PIPEGEN_TEMPLATE_ROOT_DIR)/check/terraform/.gitlab-ci.yml > $(PIPEGEN_TARGET_DIR)/.gitlab-ci.yml

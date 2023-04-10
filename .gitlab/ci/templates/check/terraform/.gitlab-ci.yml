@@ -1,0 +1,12 @@
+stages:
+- check
+
+check:
+  image: alpine:3.17.3
+  stage: check
+  before_script:
+    - apk add make
+  script: 
+    - make terraform-check-fmt
+  variables:
+    STACK_NAME: infra_canary

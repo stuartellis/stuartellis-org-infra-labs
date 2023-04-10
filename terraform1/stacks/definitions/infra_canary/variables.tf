@@ -11,5 +11,5 @@ variable "stack_name" {
 }
 
 variable "variant" {
-  type    = string
+  type = string
 }
