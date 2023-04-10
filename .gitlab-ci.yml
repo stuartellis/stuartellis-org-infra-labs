@@ -3,7 +3,7 @@ stages:
 - test
 
 variables:
-  STACK_NAME: infra_canary
+  STACK_NAME: infra_one
   PIPEGEN_TASK: check-terraform
   CHECK_TERRAFORM_STACK_NAME: $STACK_NAME
 
