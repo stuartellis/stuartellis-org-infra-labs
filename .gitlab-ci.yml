@@ -17,9 +17,6 @@ review_canary:
     STACK_VARIANT: $CI_COMMIT_REF_SLUG
   trigger:
     include: .gitlab/ci/workflows/subsystems/canary/review/.gitlab-ci.yml
-  rules:
-    - changes:
-        - terraform1/stacks/definitions/**/README.md
   only:
     - branches
   except:
