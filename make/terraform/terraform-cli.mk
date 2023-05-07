@@ -66,3 +66,7 @@ terraform-init:
 .PHONY: terraform-plan
 terraform-plan:
 	@terraform $(TF_CHDIR_OPT) plan $(TF_PLAN_FILE_OPT) $(TF_VARS_OPT) $(TF_VAR_FILES_OPT)
+
+.PHONY: terraform-install
+terraform-install:
+	@apk add terraform --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main
