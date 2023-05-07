@@ -2,6 +2,10 @@ stages:
 - plan
 - deploy
 
+variables:
+  ENVIRONMENT: dev
+  STACK_NAME: infra-one
+
 plan_terraform:
   stage: plan
   image: alpine:3.17.3
@@ -34,9 +38,6 @@ deploy_review_app:
     deployment_tier: development
     on_stop: stop_review
     # url: https://$CI_ENVIRONMENT_SLUG.example.com
-  variables:
-    ENVIRONMENT: dev
-    STACK_NAME: infra-one
 
 stop_review:
   stage: deploy
