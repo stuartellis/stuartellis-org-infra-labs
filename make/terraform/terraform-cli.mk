@@ -29,17 +29,17 @@ TF_CHDIR_OPT        := -chdir=$(TF_ROOT)
 # TF_IN_AUTOMATION 	:= true
 
 ifdef CI
-	TF_ADDRESS        := https://gitlab.com/api/v4/projects/$(CI_PROJECT_ID)/terraform/state/$(TF_STATE_NAME)
-  	TF_USERNAME       := "gitlab-ci-token"
-  	TF_PASSWORD       := $(CI_JOB_TOKEN)
+	GL_TF_ADDRESS        := https://gitlab.com/api/v4/projects/$(CI_PROJECT_ID)/terraform/state/$(TF_STATE_NAME)
+  	GL_TF_USERNAME       := "gitlab-ci-token"
+  	GL_TF_PASSWORD       := $(CI_JOB_TOKEN)
 
-	TF_HTTP_ADDRESS			:= $(TF_ADDRESS)
+	TF_HTTP_ADDRESS			:= $(GL_TF_ADDRESS)
 	TF_HTTP_LOCK_ADDRESS	:= $(TF_HTTP_ADDRESS)/lock
 	TF_HTTP_LOCK_METHOD		:= POST
-	TF_HTTP_UNLOCK_ADDRESS	:= $(TF_ADDRESS)/lock
+	TF_HTTP_UNLOCK_ADDRESS	:= $(TF_HTTP_ADDRESS)/lock
 	TF_HTTP_UNLOCK_METHOD   := DELETE
-	TF_HTTP_USERNAME		:= $(TF_USERNAME)
-	TF_HTTP_PASSWORD		:= $(TF_PASSWORD)
+	TF_HTTP_USERNAME		:= $(GL_TF_USERNAME)
+	TF_HTTP_PASSWORD		:= $(GL_TF_PASSWORD)
 	TF_HTTP_RETRY_WAIT_MIN	:= 5
 else
 	TF_RUN_CMD_OPTS   := -backend=false
@@ -61,6 +61,14 @@ terraform-fmt:
 
 .PHONY: terraform-init
 terraform-init:
+	export TF_HTTP_ADDRESS=$(TF_HTTP_ADDRESS)
+	export TF_HTTP_LOCK_ADDRESS=$(TF_HTTP_LOCK_ADDRESS)
+	export TF_HTTP_LOCK_METHOD=$(TF_HTTP_LOCK_METHOD)
+	export TF_HTTP_UNLOCK_ADDRESS=$(TF_HTTP_UNLOCK_ADDRESS)
+	export TF_HTTP_UNLOCK_METHOD=$(TF_HTTP_UNLOCK_METHOD)
+	export TF_HTTP_USERNAME=$(TF_HTTP_USERNAME)
+	export TF_HTTP_PASSWORD=$(TF_HTTP_PASSWORD)
+	export TF_HTTP_RETRY_WAIT_MIN=$(TF_HTTP_RETRY_WAIT_MIN)
 	@terraform $(TF_CHDIR_OPT) init $(TF_VARS_OPT)
 
 .PHONY: terraform-plan
