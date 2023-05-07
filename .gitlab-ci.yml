@@ -17,6 +17,7 @@ plan:
     - apk add make
   script:
     - make terraform-install
+    - make terraform-init
     - make terraform-plan
 
 deploy:
@@ -26,6 +27,7 @@ deploy:
     - apk add make
   script:
     - make terraform-install
+    - make terraform-init
     - make terraform-apply
   environment:
     name: $ENVIRONMENT-$STACK_NAME
