@@ -9,7 +9,7 @@ variables:
   SUBSYSTEM_NAME: canary
   STACK_NAME: infra-one
   STACK_VARIANT: default
-  RELEASE_VERSION: 0.0.0
+  RELEASE_VERSION: 0.1.0
 
 plan_terraform:
   image: alpine:3.17.3
