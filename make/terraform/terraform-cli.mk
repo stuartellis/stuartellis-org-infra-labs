@@ -50,7 +50,7 @@ endif
 
 .PHONY: terraform-apply
 terraform-apply:
-	@terraform $(TF_CHDIR_OPT) apply $(TF_BACKEND_CMD_OPTS) -auto-approve $(TF_PLAN_PATH)
+	@terraform $(TF_CHDIR_OPT) apply -auto-approve $(TF_PLAN_PATH)
 
 .PHONY: terraform-check-fmt
 terraform-check-fmt:
