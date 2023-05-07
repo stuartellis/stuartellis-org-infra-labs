@@ -1,0 +1,12 @@
+tag:
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  stage: tag
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - echo "Tag release"
+  release:
+    tag_name: $ENVIRONMENT-$SUBSYSTEM_NAME-$STACK_VARIANT-$RELEASE_VERSION
+    description: 'Release $ENVIRONMENT $SUBSYSTEM_NAME $STACK_VARIANT $RELEASE_VERSION'

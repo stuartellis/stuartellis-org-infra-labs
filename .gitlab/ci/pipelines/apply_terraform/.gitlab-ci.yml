@@ -1,0 +1,14 @@
+ deploy_terraform:
+  image: alpine:3.17.3
+  stage: deploy
+  before_script:
+    - apk add make
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-apply
+  dependencies:
+    - plan_terraform
+  environment:
+    name: $ENVIRONMENT/$STACK_NAME-$STACK_VARIANT
+    deployment_tier: development # One of: production, staging, testing, development, other

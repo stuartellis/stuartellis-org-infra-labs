@@ -1,0 +1,53 @@
+stages:
+- plan
+- deploy
+
+plan_terraform:
+  stage: plan
+  image: alpine:3.17.3
+  before_script:
+    - apk add make
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-plan
+  artifacts:
+    when: on_success
+    name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/terraform
+
+deploy_review_app:
+  stage: deploy
+  image: alpine:3.17.3
+  before_script:
+    - apk add make
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-apply
+  dependencies:
+    - plan_terraform
+  environment:
+    name: dev/$STACK_VARIANT
+    deployment_tier: development
+    on_stop: stop_review
+    # url: https://$CI_ENVIRONMENT_SLUG.example.com
+  variables:
+    ENVIRONMENT: dev
+    STACK_NAME: infra-one
+
+stop_review:
+  stage: deploy
+  image: alpine:3.17.3
+  before_script:
+    - apk add make
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-destroy
+  environment:
+    name: dev/$STACK_VARIANT
+    action: stop
+  when: manual

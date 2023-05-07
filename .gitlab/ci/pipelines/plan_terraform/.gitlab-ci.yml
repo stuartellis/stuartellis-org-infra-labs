@@ -1,0 +1,16 @@
+
+plan_terraform:
+  image: alpine:3.17.3
+  stage: plan
+  before_script:
+    - apk add make
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-plan
+  artifacts:
+    when: on_success
+    name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/terraform

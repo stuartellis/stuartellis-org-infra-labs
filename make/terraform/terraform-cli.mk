@@ -5,7 +5,7 @@ STACK_NAME          ?= NONE
 STACK_VARIANT       ?= default
 ST_STACKS_DEFS_DIR	:= $(PROJECT_DIR)/terraform1/stacks/definitions
 ST_STACKS_ENVS_DIR	:= $(PROJECT_DIR)/terraform1/stacks/environments
-ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp
+ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp/terraform
 
 ## Variables for Terraform ##
 
@@ -66,6 +66,10 @@ terraform-apply:
 terraform-check-fmt:
 	@terraform $(ST_CHDIR_OPT) fmt -check -diff -recursive
 
+.PHONY: terraform-destroy
+terraform-destroy:
+	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) apply -destroy -auto-approve $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+
 .PHONY: terraform-fmt
 terraform-fmt:
 	@terraform $(ST_CHDIR_OPT) fmt
@@ -76,6 +80,7 @@ terraform-init:
 
 .PHONY: terraform-plan
 terraform-plan:
+	mkdir -p $(ST_TF_TMP_DIR)
 	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
 .PHONY: terraform-install
