@@ -1,27 +1,43 @@
 stages:
-- build
-- test
+- plan
+- deploy
+- tag
 
 variables:
-  STACK_NAME: infra_one
-  PIPEGEN_TASK: check-terraform
-  CHECK_TERRAFORM_STACK_NAME: $STACK_NAME
+  ENVIRONMENT: dev
+  SUBSYSTEM_NAME: canary
+  STACK_NAME: infra-one
+  STACK_VARIANT: default
+  RELEASE_VERSION: 0.0.0
 
-generate-pipeline:
+plan:
   image: alpine:3.17.3
-  stage: build
+  stage: plan
   before_script:
     - apk add make
-  script: 
-    - make pipegen-get-ytt
-    - make pipegen-build
-  artifacts:
-    paths:
-      - tmp/pipegen/$PIPEGEN_TASK/.gitlab-ci.yml
+  script:
+    - make terraform-plan
 
-dynamic-test:
-  stage: test
-  trigger:
-    include:
-      - artifact: tmp/pipegen/$PIPEGEN_TASK/.gitlab-ci.yml
-        job: generate-pipeline
+deploy:
+  image: alpine:3.17.3
+  stage: deploy
+  before_script:
+    - apk add make
+  script:
+    - make terraform-apply
+  environment:
+    name: $ENVIRONMENT-$STACK_NAME
+  release:
+    tag_name: $ENVIRONMENT-$STACK_NAME-$RELEASE_VERSION
+    description: 'Release'
+
+tag:
+  image: alpine:3.17.3
+  stage: tag
+  before_script:
+    - apk add make
+  script:
+    - make tag
+  release:
+    tag_name: $ENVIRONMENT-$SUBSYSTEM_NAME-$RELEASE_VERSION
+    description: 'Subsystem Release'

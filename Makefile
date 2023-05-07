@@ -16,6 +16,4 @@ ENVIRONMENT				?= dev
 
 PRODUCT_NAME			:= labs
 
-include make/gitlab/*.mk
-
 include make/terraform/*.mk
