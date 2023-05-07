@@ -69,4 +69,4 @@ terraform-plan:
 
 .PHONY: terraform-install
 terraform-install:
-	@apk add terraform --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main
+	@apk add terraform --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
