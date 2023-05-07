@@ -81,7 +81,7 @@ terraform-plan:
 	TF_HTTP_USERNAME=$(TF_HTTP_USERNAME) \
 	TF_HTTP_PASSWORD=$(TF_HTTP_PASSWORD) \
 	TF_HTTP_RETRY_WAIT_MIN=$(TF_HTTP_RETRY_WAIT_MIN) \
-	@terraform $(TF_CHDIR_OPT) plan $(TF_PLAN_FILE_OPT) $(TF_VARS_OPT) $(TF_VAR_FILES_OPT)
+	terraform $(TF_CHDIR_OPT) plan $(TF_PLAN_FILE_OPT) $(TF_VARS_OPT) $(TF_VAR_FILES_OPT)
 
 .PHONY: terraform-install
 terraform-install:
