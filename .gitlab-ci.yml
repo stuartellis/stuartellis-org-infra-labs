@@ -9,7 +9,7 @@ variables:
   SUBSYSTEM_NAME: canary
   STACK_NAME: infra-one
   STACK_VARIANT: default
-  RELEASE_VERSION: 0.1.0
+  RELEASE_VERSION: 0.2.0
 
 plan_terraform:
   image: alpine:3.17.3
@@ -39,7 +39,7 @@ deploy_terraform:
   dependencies:
     - plan_terraform
   environment:
-    name: $ENVIRONMENT-$STACK_NAME
+    name: $ENVIRONMENT-$STACK_NAME-$STACK_VARIANT
 
 tag:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
@@ -49,7 +49,7 @@ tag:
       when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
-    - echo "Tag release $ENVIRONMENT $SUBSYSTEM_NAME $RELEASE_VERSION"
+    - echo "Tag release"
   release:
-    tag_name: $ENVIRONMENT-$SUBSYSTEM_NAME-$RELEASE_VERSION
-    description: 'Release $ENVIRONMENT $SUBSYSTEM_NAME $RELEASE_VERSION'
+    tag_name: $ENVIRONMENT-$SUBSYSTEM_NAME-$STACK_VARIANT-$RELEASE_VERSION
+    description: 'Release $ENVIRONMENT $SUBSYSTEM_NAME $STACK_VARIANT $RELEASE_VERSION'
