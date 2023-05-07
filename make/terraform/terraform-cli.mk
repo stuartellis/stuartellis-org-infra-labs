@@ -23,27 +23,26 @@ TF_PLAN_FILE      := $(TF_STATE_NAME).tfplan
 TF_PLAN_PATH      := $(ST_TF_TMP_DIR)/$(TF_PLAN_FILE)
 TF_PLAN_FILE_OPT  := -out=$(TF_PLAN_PATH)
 
+TF_CHDIR_OPT        := -chdir=$(TF_ROOT)
+
 ##  Variables for GitLab ##
 # TF_IN_AUTOMATION 	:= true
-
-TF_CHDIR_OPT        := -chdir=$(TF_ROOT)
 
 ifdef CI
 	TF_ADDRESS        := https://gitlab.com/api/v4/projects/$(CI_PROJECT_ID)/terraform/state/$(TF_STATE_NAME)
   	TF_USERNAME       := "gitlab-ci-token"
   	TF_PASSWORD       := $(CI_JOB_TOKEN)
 
-  	TF_BACKEND_CMD_OPTS   := -backend-config=address=$(TF_ADDRESS) \
-  	-backend-config=lock_address=$(TF_ADDRESS)/lock \
-  	-backend-config=unlock_address=$(TF_ADDRESS)/lock \
-  	-backend-config=username=$(TF_USERNAME) \
-  	-backend-config=password=$(TF_PASSWORD) \
-  	-backend-config=lock_method=POST \
-  	-backend-config=unlock_method=DELETE \
-  	-backend-config=retry_wait_min=5
-
+	TF_HTTP_ADDRESS			:= $(TF_ADDRESS)
+	TF_HTTP_LOCK_ADDRESS	:= $(TF_HTTP_ADDRESS)/lock
+	TF_HTTP_LOCK_METHOD		:= POST
+	TF_HTTP_UNLOCK_ADDRESS	:= $(TF_ADDRESS)/lock
+	TF_HTTP_UNLOCK_METHOD   := DELETE
+	TF_HTTP_USERNAME		:= $(TF_USERNAME)
+	TF_HTTP_PASSWORD		:= $(TF_PASSWORD)
+	TF_HTTP_RETRY_WAIT_MIN	:= 5
 else
-	TF_BACKEND_CMD_OPTS   := -backend=false
+	TF_RUN_CMD_OPTS   := -backend=false
 endif
 
 ## Targets ##
@@ -62,7 +61,7 @@ terraform-fmt:
 
 .PHONY: terraform-init
 terraform-init:
-	@terraform $(TF_CHDIR_OPT) init $(TF_BACKEND_CMD_OPTS) $(TF_VARS_OPT)
+	@terraform $(TF_CHDIR_OPT) init $(TF_VARS_OPT)
 
 .PHONY: terraform-plan
 terraform-plan:
