@@ -33,7 +33,7 @@ ifdef CI
   	TF_USERNAME       := "gitlab-ci-token"
   	TF_PASSWORD       := $(CI_JOB_TOKEN)
 
-  	TF_RUN_CMD_OPTS   := -backend-config=address=$(TF_ADDRESS) \
+  	TF_BACKEND_CMD_OPTS   := -backend-config=address=$(TF_ADDRESS) \
   	-backend-config=lock_address=$(TF_ADDRESS)/lock \
   	-backend-config=unlock_address=$(TF_ADDRESS)/lock \
   	-backend-config=username=$(TF_USERNAME) \
@@ -43,14 +43,14 @@ ifdef CI
   	-backend-config=retry_wait_min=5
 
 else
-	TF_RUN_CMD_OPTS   := -backend=false
+	TF_BACKEND_CMD_OPTS   := -backend=false
 endif
 
 ## Targets ##
 
 .PHONY: terraform-apply
 terraform-apply:
-	@terraform $(TF_CHDIR_OPT) apply $(TF_RUN_CMD_OPTS) -auto-approve $(TF_PLAN_PATH)
+	@terraform $(TF_CHDIR_OPT) apply $(TF_BACKEND_CMD_OPTS) -auto-approve $(TF_PLAN_PATH)
 
 .PHONY: terraform-check-fmt
 terraform-check-fmt:
@@ -62,11 +62,11 @@ terraform-fmt:
 
 .PHONY: terraform-init
 terraform-init:
-	@terraform $(TF_CHDIR_OPT) init $(TF_RUN_CMD_OPTS) $(TF_VARS_OPT)
+	@terraform $(TF_CHDIR_OPT) init $(TF_BACKEND_CMD_OPTS) $(TF_VARS_OPT)
 
 .PHONY: terraform-plan
 terraform-plan:
-	@terraform $(TF_CHDIR_OPT) plan $(TF_RUN_CMD_OPTS) $(TF_PLAN_FILE_OPT) $(TF_VARS_OPT) $(TF_VAR_FILES_OPT)
+	@terraform $(TF_CHDIR_OPT) plan $(TF_PLAN_FILE_OPT) $(TF_VARS_OPT) $(TF_VAR_FILES_OPT)
 
 .PHONY: terraform-install
 terraform-install:
