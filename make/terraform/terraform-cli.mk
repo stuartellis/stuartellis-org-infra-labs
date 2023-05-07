@@ -19,7 +19,7 @@ TF_VARS_OPT       := -var="product_name=$(PRODUCT_NAME)" -var="stack_name=$(STAC
 TF_VAR_FILES_OPT  := -var-file=$(ST_STACKS_ENVS_DIR)/all/$(STACK_NAME).tfvars -var-file=$(ST_STACKS_ENVS_DIR)/$(ENVIRONMENT)/$(STACK_NAME).tfvars
 
 # Terraform plan
-TF_PLAN_FILE      := $(STACK_NAME)-$(ENVIRONMENT)-$(STACK_VARIANT).tfplan
+TF_PLAN_FILE      := $(TF_STATE_NAME).tfplan
 TF_PLAN_PATH      := $(ST_TF_TMP_DIR)/$(TF_PLAN_FILE)
 TF_PLAN_FILE_OPT  := -out=$(TF_PLAN_PATH)
 

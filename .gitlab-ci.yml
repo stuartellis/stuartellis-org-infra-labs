@@ -5,12 +5,13 @@ stages:
 
 variables:
   ENVIRONMENT: dev
+  PRODUCT_NAME: labs
   SUBSYSTEM_NAME: canary
   STACK_NAME: infra-one
   STACK_VARIANT: default
   RELEASE_VERSION: 0.0.0
 
-plan:
+plan_terraform:
   image: alpine:3.17.3
   stage: plan
   before_script:
@@ -19,8 +20,14 @@ plan:
     - make terraform-install
     - make terraform-init
     - make terraform-plan
+  artifacts:
+    when: on_success
+    name: $(STACK_NAME)-$(ENVIRONMENT)-$(STACK_VARIANT)-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/
 
-deploy:
+deploy_terraform:
   image: alpine:3.17.3
   stage: deploy
   before_script:
@@ -29,6 +36,8 @@ deploy:
     - make terraform-install
     - make terraform-init
     - make terraform-apply
+  dependencies:
+    - plan_terraform
   environment:
     name: $ENVIRONMENT-$STACK_NAME
   release:
