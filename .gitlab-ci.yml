@@ -45,12 +45,8 @@ deploy_terraform:
     description: 'Release'
 
 tag:
-  image: alpine:3.17.3
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
   stage: tag
-  before_script:
-    - apk add make
-  script:
-    - make tag
   release:
     tag_name: $ENVIRONMENT-$SUBSYSTEM_NAME-$RELEASE_VERSION
     description: 'Subsystem Release'
