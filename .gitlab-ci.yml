@@ -22,7 +22,7 @@ plan_terraform:
     - make terraform-plan
   artifacts:
     when: on_success
-    name: $(STACK_NAME)-$(ENVIRONMENT)-$(STACK_VARIANT)-tfplan
+    name: $STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
     expire_in: 1 week
     paths:
       - tmp/
