@@ -9,14 +9,14 @@ stages:
 #   STACK_VARIANT: default
 #   RELEASE_VERSION: 0.2.0
 
-review_canary:
+review_container_registry:
   stage: review
   variables:
     PRODUCT_NAME: labs
-    SUBSYSTEM_NAME: canary
+    SUBSYSTEM_NAME: ctr-storage
     STACK_VARIANT: $CI_COMMIT_REF_SLUG
   trigger:
-    include: .gitlab/ci/workflows/subsystems/canary/review/.gitlab-ci.yml
+    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/review/.gitlab-ci.yml
   only:
     - branches
   except:
