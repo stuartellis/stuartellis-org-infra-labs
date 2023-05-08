@@ -9,6 +9,8 @@ ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp/terraform
 
 ## Variables for Terraform ##
 
+ST_TF_EXE			:= /bin/terraform
+
 # GitLab uses TF_ROOT
 TF_ROOT           := $(ST_STACKS_DEFS_DIR)/$(STACK_NAME)
 
@@ -61,33 +63,36 @@ endif
 
 .PHONY: terraform-apply
 terraform-apply:
-	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) apply -auto-approve $(ST_PLAN_PATH)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) apply -auto-approve $(ST_PLAN_PATH)
 
 .PHONY: terraform-check-fmt
 terraform-check-fmt:
-	@terraform $(ST_CHDIR_OPT) fmt -check -diff -recursive
+	$(ST_TF_EXE) $(ST_CHDIR_OPT) fmt -check -diff -recursive
 
 .PHONY: terraform-destroy
 terraform-destroy:
-	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) apply -destroy -auto-approve $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) apply -destroy -auto-approve $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
 .PHONY: terraform-fmt
 terraform-fmt:
-	@terraform $(ST_CHDIR_OPT) fmt
+	$(ST_TF_EXE) $(ST_CHDIR_OPT) fmt
 
 .PHONY: terraform-init
 terraform-init:
-	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) init $(ST_VARS_OPT)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) init $(ST_VARS_OPT)
 
 .PHONY: terraform-plan
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
-	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
 .PHONY: terraform-show-json
 terraform-show-json:
-	terraform show --json $(ST_PLAN_PATH) | $(GL_TF_PLAN_FILTER) > $(ST_TF_PLAN_JSON)
+	$(ST_TF_EXE) show --json $(ST_PLAN_PATH) | $(GL_TF_PLAN_FILTER) > $(ST_TF_PLAN_JSON)
 
 .PHONY: terraform-install
 terraform-install:
-	@apk add terraform --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community
+	mkdir -p bin
+	cd bin && curl -L https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip > terraform_1.4.6_linux_amd64.zip
+	cd bin && unzip terraform_1.4.6_linux_amd64.zip
+	cd bin && rm terraform_1.4.6_linux_amd64.zip

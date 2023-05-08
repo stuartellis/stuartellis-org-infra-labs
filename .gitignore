@@ -2,6 +2,9 @@
 .DS_Store
 thumbs.db
 
+# Generated files
+bin
+
 # Editor files
 .idea
 .vscode
