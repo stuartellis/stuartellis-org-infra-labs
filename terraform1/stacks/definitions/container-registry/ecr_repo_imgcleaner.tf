@@ -1,6 +1,6 @@
 module "ecr_repo_imgcleaner" {
 
-  source  = "terraform-aws-modules/ecr/aws//examples/complete"
+  source  = "terraform-aws-modules/ecr/aws"
   version = "1.6.0"
 
   repository_name = "imgcleaner"
