@@ -5,11 +5,12 @@ STACK_NAME          ?= NONE
 STACK_VARIANT       ?= default
 ST_STACKS_DEFS_DIR	:= $(PROJECT_DIR)/terraform1/stacks/definitions
 ST_STACKS_ENVS_DIR	:= $(PROJECT_DIR)/terraform1/stacks/environments
+ST_TF_BIN_DIR		:= $(PROJECT_DIR)/bin
 ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp/terraform
 
 ## Variables for Terraform ##
 
-ST_TF_EXE			:= $(PROJECT_DIR)/bin/terraform
+ST_TF_EXE			:= $(ST_TF_BIN_DIR)/terraform
 
 # GitLab uses TF_ROOT
 TF_ROOT           := $(ST_STACKS_DEFS_DIR)/$(STACK_NAME)
@@ -92,7 +93,7 @@ terraform-show-json:
 
 .PHONY: terraform-install
 terraform-install:
-	mkdir -p bin
-	cd bin && curl -L https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip > terraform_1.4.6_linux_amd64.zip
-	cd bin && unzip terraform_1.4.6_linux_amd64.zip
-	cd bin && rm terraform_1.4.6_linux_amd64.zip
+	mkdir -p $(ST_TF_BIN_DIR)
+	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip > terraform_1.4.6_linux_amd64.zip
+	cd $(ST_TF_BIN_DIR) && unzip terraform_1.4.6_linux_amd64.zip
+	cd $(ST_TF_BIN_DIR) && rm terraform_1.4.6_linux_amd64.zip
