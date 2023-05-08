@@ -85,7 +85,7 @@ terraform-plan:
 	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
 .PHONY: terraform-show-json
-terraform-show:
+terraform-show-json:
 	terraform show --json $(ST_PLAN_PATH) | convert_report > $(ST_TF_PLAN_JSON)
 
 .PHONY: terraform-install
