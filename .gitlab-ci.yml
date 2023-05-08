@@ -21,3 +21,16 @@ review_container_registry:
     - branches
   except:
     - main
+
+review_file_storage:
+  stage: review
+  variables:
+    PRODUCT_NAME: labs
+    SUBSYSTEM_NAME: file-storage
+    STACK_VARIANT: $CI_COMMIT_REF_SLUG
+  trigger:
+    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/review/.gitlab-ci.yml
+  only:
+    - branches
+  except:
+    - main
