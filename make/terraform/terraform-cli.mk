@@ -25,7 +25,7 @@ ST_PLAN_FILE_OPT	:= -out=$(ST_PLAN_PATH)
 ST_TF_PLAN_JSON		:= $(ST_TF_TMP_DIR)/$(TF_STATE_NAME)-plan.json
 
 ST_CHDIR_OPT		:= -chdir=$(TF_ROOT)
-GL_TF_PLAN_FILTER 	:= jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'
+GL_TF_PLAN_FILTER 	:= jq -r '([.resource_changes[]?.change.actions?]|flatten)|{"create":(map(select(.=="create"))|length),"update":(map(select(.=="update"))|length),"delete":(map(select(.=="delete"))|length)}'
 
 ##  Variables for GitLab ##
 # TF_IN_AUTOMATION 	:= true
