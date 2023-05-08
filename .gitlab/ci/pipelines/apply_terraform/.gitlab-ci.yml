@@ -2,7 +2,7 @@
   image: alpine:3.17.3
   stage: deploy
   before_script:
-    - apk add --no-cache curl make unzip
+    - apk add --no-cache curl git make unzip
   script:
     - make terraform-install
     - make terraform-init

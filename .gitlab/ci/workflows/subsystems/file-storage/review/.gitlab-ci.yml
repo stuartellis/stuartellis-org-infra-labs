@@ -11,7 +11,7 @@ plan_terraform:
   stage: plan
   image: alpine:3.17.3
   before_script:
-    - apk add --no-cache curl jq make unzip
+    - apk add --no-cache curl git jq make unzip
   script:
     - make terraform-install
     - make terraform-init
@@ -27,7 +27,7 @@ deploy_review_app:
   stage: deploy
   image: alpine:3.17.3
   before_script:
-    - apk add --no-cache curl make unzip
+    - apk add --no-cache curl git make unzip
   script:
     - make terraform-install
     - make terraform-init
@@ -44,7 +44,7 @@ stop_review:
   stage: deploy
   image: alpine:3.17.3
   before_script:
-    - apk add --no-cache curl make unzip
+    - apk add --no-cache curl git make unzip
   script:
     - make terraform-install
     - make terraform-init
