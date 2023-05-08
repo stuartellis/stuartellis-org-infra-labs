@@ -16,6 +16,7 @@ plan_terraform:
     - make terraform-install
     - make terraform-init
     - make terraform-plan
+    - make terraform-show-json
   artifacts:
     when: on_success
     name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
