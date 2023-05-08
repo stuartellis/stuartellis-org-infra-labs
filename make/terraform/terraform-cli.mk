@@ -86,7 +86,7 @@ terraform-plan:
 
 .PHONY: terraform-show-json
 terraform-show-json:
-	terraform show --json $(ST_PLAN_PATH) | convert_report > $(ST_TF_PLAN_JSON)
+	terraform show --json $(ST_PLAN_PATH) | $(GL_TF_PLAN_FILTER) > $(ST_TF_PLAN_JSON)
 
 .PHONY: terraform-install
 terraform-install:
