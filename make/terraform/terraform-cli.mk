@@ -9,7 +9,7 @@ ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp/terraform
 
 ## Variables for Terraform ##
 
-ST_TF_EXE			:= /bin/terraform
+ST_TF_EXE			:= $(PROJECT_DIR)/bin/terraform
 
 # GitLab uses TF_ROOT
 TF_ROOT           := $(ST_STACKS_DEFS_DIR)/$(STACK_NAME)
