@@ -3,7 +3,7 @@ plan_terraform:
   image: alpine:3.17.3
   stage: plan
   before_script:
-    - apk add --no-cache make
+    - apk add --no-cache jq make
   script:
     - make terraform-install
     - make terraform-init
