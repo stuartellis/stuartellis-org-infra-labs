@@ -5,12 +5,13 @@ stages:
 variables:
   ENVIRONMENT: dev
   STACK_NAME: infra-one
+  TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
 
 plan_terraform:
   stage: plan
   image: alpine:3.17.3
   before_script:
-    - apk add make
+    - apk add --no-cache make
   script:
     - make terraform-install
     - make terraform-init
@@ -21,12 +22,14 @@ plan_terraform:
     expire_in: 1 week
     paths:
       - tmp/terraform
+    reports:
+      terraform: $TF_PLAN_JSON
 
 deploy_review_app:
   stage: deploy
   image: alpine:3.17.3
   before_script:
-    - apk add make
+    - apk add --no-cache make
   script:
     - make terraform-install
     - make terraform-init
@@ -43,7 +46,7 @@ stop_review:
   stage: deploy
   image: alpine:3.17.3
   before_script:
-    - apk add make
+    - apk add --no-cache make
   script:
     - make terraform-install
     - make terraform-init

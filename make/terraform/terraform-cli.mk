@@ -12,19 +12,20 @@ ST_TF_TMP_DIR		:= $(PROJECT_DIR)/tmp/terraform
 # GitLab uses TF_ROOT
 TF_ROOT           := $(ST_STACKS_DEFS_DIR)/$(STACK_NAME)
 
-TF_PLAN_CACHE     := $(TF_ROOT)/plan.cache
-TF_PLAN_JSON      := $(TF_ROOT)/plan.json
 TF_STATE_NAME     := $(PRODUCT_NAME)-$(ENVIRONMENT)-$(STACK_NAME)-$(STACK_VARIANT)
 
 ST_VARS_OPT       := -var="product_name=$(PRODUCT_NAME)" -var="stack_name=$(STACK_NAME)" -var="environment=$(ENVIRONMENT)" -var="variant=$(STACK_VARIANT)"
 ST_VAR_FILES_OPT  := -var-file=$(ST_STACKS_ENVS_DIR)/all/$(STACK_NAME).tfvars -var-file=$(ST_STACKS_ENVS_DIR)/$(ENVIRONMENT)/$(STACK_NAME).tfvars
 
 # Terraform plan
-ST_PLAN_FILE      := $(TF_STATE_NAME).tfplan
-ST_PLAN_PATH      := $(ST_TF_TMP_DIR)/$(ST_PLAN_FILE)
-ST_PLAN_FILE_OPT  := -out=$(ST_PLAN_PATH)
+ST_PLAN_FILE		:= $(TF_STATE_NAME).tfplan
+ST_PLAN_FILE_OPT	:= -out=$(ST_PLAN_PATH)
+ST_PLAN_PATH		:= $(ST_TF_TMP_DIR)/$(ST_PLAN_FILE)
 
-ST_CHDIR_OPT        := -chdir=$(TF_ROOT)
+ST_TF_PLAN_JSON		:= $(ST_TF_TMP_DIR)/$(TF_STATE_NAME)-plan.json
+
+ST_CHDIR_OPT		:= -chdir=$(TF_ROOT)
+GL_TF_PLAN_FILTER 	:= "jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
 
 ##  Variables for GitLab ##
 # TF_IN_AUTOMATION 	:= true
@@ -82,6 +83,10 @@ terraform-init:
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
 	$(ST_BACKEND_ENV_VARS) terraform $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+
+.PHONY: terraform-show
+terraform-show:
+	terraform show --json $(ST_PLAN_PATH) | convert_report > $(ST_TF_PLAN_JSON)
 
 .PHONY: terraform-install
 terraform-install:

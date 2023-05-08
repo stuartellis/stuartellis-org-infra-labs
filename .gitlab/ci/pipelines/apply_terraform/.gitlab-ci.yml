@@ -2,7 +2,7 @@
   image: alpine:3.17.3
   stage: deploy
   before_script:
-    - apk add make
+    - apk add --no-cache make
   script:
     - make terraform-install
     - make terraform-init
