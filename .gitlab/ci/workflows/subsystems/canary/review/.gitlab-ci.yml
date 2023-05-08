@@ -16,15 +16,12 @@ plan_terraform:
     - make terraform-install
     - make terraform-init
     - make terraform-plan
-    - make terraform-show-json
   artifacts:
     when: on_success
     name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
     expire_in: 1 week
     paths:
       - tmp/terraform
-    reports:
-      terraform: $TF_PLAN_JSON
 
 deploy_review_app:
   stage: deploy
