@@ -1,6 +1,6 @@
 stages:
 - analyze
-- merge-request
+# - merge_request
 
 # variables:
 #   ENVIRONMENT: dev
@@ -10,29 +10,34 @@ stages:
 #   STACK_VARIANT: default
 #   RELEASE_VERSION: 0.2.0
 
-include:
-  - local: '.gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml'
-
-review_container_registry:
-  stage: merge-request
-  variables:
-    PRODUCT_NAME: labs
-    SUBSYSTEM_NAME: ctr-storage
-    STACK_VARIANT: $CI_COMMIT_SHORT_SHA
+analyze_code:
+  stage: analyze
   trigger:
-    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
+    include: .gitlab/ci/workflows/project/analyze/.gitlab-ci.yml
     strategy: depend
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
-review_file_storage:
-  stage: merge-request
-  variables:
-    PRODUCT_NAME: labs
-    SUBSYSTEM_NAME: file-storage
-    STACK_VARIANT: $CI_COMMIT_SHORT_SHA
-  trigger:
-    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
-    strategy: depend
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+# review_container_registry:
+#   stage: merge_request
+#   variables:
+#     PRODUCT_NAME: labs
+#     SUBSYSTEM_NAME: ctr-storage
+#     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
+#   trigger:
+#     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge_request/.gitlab-ci.yml
+#     strategy: depend
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
+# review_file_storage:
+#   stage: merge_request
+#   variables:
+#     PRODUCT_NAME: labs
+#     SUBSYSTEM_NAME: file-storage
+#     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
+#   trigger:
+#     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge_request/.gitlab-ci.yml
+#     strategy: depend
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'

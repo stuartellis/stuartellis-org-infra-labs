@@ -1,9 +1,13 @@
+stages:
+- analyze_terraform
+
 analyze_terraform:
-  stage: analyze
+  stage: analyze_terraform
   image: alpine:3.18.0
   before_script:
     - apk add --no-cache curl git jq make unzip
   script:
     - make terraform-dummy
   rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - changes:
+        - terraform1/*
