@@ -10,11 +10,8 @@ stages:
 #   STACK_VARIANT: default
 #   RELEASE_VERSION: 0.2.0
 
-analyze_code:
-  stage: analyze
-  trigger:
-    include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
-    strategy: depend
+include:
+  - local: '.gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml'
 
 review_container_registry:
   stage: merge-request
