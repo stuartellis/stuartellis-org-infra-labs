@@ -1,3 +1,6 @@
+stages:
+- analyze
+
 plan_terraform:
   stage: analyze
   image: alpine:3.18.0
