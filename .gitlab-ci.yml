@@ -14,8 +14,8 @@ analyze_code:
   stage: analyze
   trigger:
     include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  only:
+    - merge_requests
 
 review_container_registry:
   stage: merge-request
@@ -25,8 +25,8 @@ review_container_registry:
     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
   trigger:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  only:
+    - merge_requests
 
 review_file_storage:
   stage: merge-request
@@ -36,5 +36,5 @@ review_file_storage:
     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
   trigger:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  only:
+    - merge_requests
