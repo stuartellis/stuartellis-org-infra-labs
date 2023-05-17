@@ -1,5 +1,7 @@
 workflow:
   name: 'Analyze Terraform'
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
 
 stages:
 - analyze-terraform
