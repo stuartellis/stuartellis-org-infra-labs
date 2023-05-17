@@ -27,6 +27,6 @@ review_file_storage:
     SUBSYSTEM_NAME: file-storage
     STACK_VARIANT: $CI_COMMIT_REF_SLUG
   trigger:
-    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/review/.gitlab-ci.yml
+    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
