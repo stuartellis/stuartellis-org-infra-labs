@@ -15,8 +15,6 @@ analyze_code:
   trigger:
     include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
     strategy: depend
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
 
 review_container_registry:
   stage: merge-request
