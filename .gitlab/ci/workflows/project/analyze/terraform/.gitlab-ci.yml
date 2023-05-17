@@ -1,10 +1,12 @@
 stages:
-- analyze
+- analyze-terraform
 
-plan_terraform:
-  stage: analyze
+analyze_terraform:
+  stage: analyze-terraform
   image: alpine:3.18.0
   before_script:
     - apk add --no-cache curl git jq make unzip
   script:
     - make terraform-dummy
+  only:
+    - merge_requests

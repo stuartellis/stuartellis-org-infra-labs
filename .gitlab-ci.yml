@@ -15,8 +15,7 @@ analyze_code:
   trigger:
     include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
   only:
-    refs:
-      - merge_requests
+    - merge_requests
 
 review_container_registry:
   stage: merge-request
@@ -27,8 +26,7 @@ review_container_registry:
   trigger:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
   only:
-    refs:
-      - merge_requests
+    - merge_requests
 
 review_file_storage:
   stage: merge-request
@@ -39,5 +37,4 @@ review_file_storage:
   trigger:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
   only:
-    refs:
-      - merge_requests
+    - merge_requests
