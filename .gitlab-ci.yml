@@ -16,6 +16,8 @@ analyze_code:
     include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      changes:
+        - terraform1/*
       when: always
 
 review_container_registry:
