@@ -1,13 +1,12 @@
 stages:
-- analyze_terraform
+- analyze_dummy
 
-analyze_terraform:
-  stage: analyze_terraform
+analyze_dummy:
+  stage: analyze_dummy
   image: alpine:3.18.0
   before_script:
     - apk add --no-cache curl git jq make unzip
   script:
     - make terraform-dummy
   rules:
-    - changes:
-        - terraform1/*
+    - if: '$CI_PIPELINE_SOURCE == "push"'
