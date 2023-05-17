@@ -74,6 +74,10 @@ terraform-check-fmt:
 terraform-destroy:
 	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) apply -destroy -auto-approve $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
+.PHONY: terraform-dummy
+terraform-dummy:
+	echo 'Dummy target'
+
 .PHONY: terraform-fmt
 terraform-fmt:
 	$(ST_TF_EXE) $(ST_CHDIR_OPT) fmt
