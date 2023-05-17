@@ -16,6 +16,7 @@ analyze_code:
     include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
 
 review_container_registry:
   stage: merge-request
@@ -27,6 +28,7 @@ review_container_registry:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
 
 review_file_storage:
   stage: merge-request
@@ -38,3 +40,4 @@ review_file_storage:
     include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge-request/.gitlab-ci.yml
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      when: always
