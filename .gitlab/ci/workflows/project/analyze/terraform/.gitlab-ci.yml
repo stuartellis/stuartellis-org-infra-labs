@@ -5,3 +5,5 @@ analyze_terraform:
     - apk add --no-cache curl git jq make unzip
   script:
     - make terraform-dummy
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
