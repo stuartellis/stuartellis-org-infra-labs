@@ -10,3 +10,4 @@ analyze_dummy:
     - make terraform-dummy
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: always
