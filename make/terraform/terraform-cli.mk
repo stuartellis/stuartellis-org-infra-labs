@@ -23,7 +23,7 @@ ST_VAR_FILES_OPT  := -var-file=$(ST_STACKS_ENVS_DIR)/all/$(STACK_NAME).tfvars -v
 # Terraform plan
 ST_PLAN_FILE		:= $(TF_STATE_NAME).tfplan
 ST_PLAN_PATH		:= $(ST_TF_TMP_DIR)/$(ST_PLAN_FILE)
-ST_PLAN_FILE_OPT	:= -out=$(ST_PLAN_PATH)
+ST_PLAN_OPT			:= -detailed-exitcode -out=$(ST_PLAN_PATH)
 
 ST_TF_PLAN_JSON		:= $(ST_TF_TMP_DIR)/$(TF_STATE_NAME)-plan.json
 
@@ -89,7 +89,7 @@ terraform-init:
 .PHONY: terraform-plan
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
-	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_FILE_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
 
 .PHONY: terraform-show-json
 terraform-show-json:

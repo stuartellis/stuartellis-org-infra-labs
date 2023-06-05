@@ -15,7 +15,9 @@
     - make terraform-install
     - make terraform-init
     - make terraform-validate
-    - make terraform-plan
+    - make terraform-plan || TF_PLAN_EXIT_CODE=$?
+    - exit $TF_PLAN_EXIT_CODE
+
   artifacts:
     when: on_success
     name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
