@@ -6,6 +6,8 @@
     COMPONENT_NAME: infra-canary
     PRODUCT_NAME: labs
     STACK_VARIANT: default
+    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
+    RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 ## Stages
 
@@ -13,8 +15,6 @@ infra-canary_analyze:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
-    RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
   stage: analyze
   needs: []
   extends:
@@ -37,8 +37,6 @@ infra-canary_plan_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
-    RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
   stage: review
   needs: ["infra-canary_analyze"]
@@ -51,8 +49,6 @@ infra-canary_review_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
-    RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
   stage: review
   needs: ["infra-canary_plan_dev"]
   dependencies:
