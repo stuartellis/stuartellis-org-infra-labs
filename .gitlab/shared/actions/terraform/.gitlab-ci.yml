@@ -18,9 +18,7 @@
     - make terraform-init
     - make terraform-validate
     - make terraform-plan
-    - TF_PLAN_EXIT_CODE=$?
-    - echo $TF_PLAN_EXIT_CODE > tmp/terraform/result-code.txt
-    - exit $TF_PLAN_EXIT_CODE
+    - echo wat
 
   artifacts:
     when: always
