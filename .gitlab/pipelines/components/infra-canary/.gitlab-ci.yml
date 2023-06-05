@@ -45,8 +45,8 @@ infra-canary_review:
   extends:
     - .comp_infra_canary
     - .rules_analyze
-    - .plan_terraform
-    - .deploy_tf_review
+    - .action_plan_terraform
+    - .action_deploy_tf_review
   needs: ["infra-canary_analyze"]
 
 # infra-canary_release:
