@@ -90,6 +90,8 @@ terraform-init:
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
 	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+	echo $(.SHELLSTATUS)
+	@exit $(.SHELLSTATUS)
 
 .PHONY: terraform-show-json
 terraform-show-json:
