@@ -18,7 +18,7 @@
     - make terraform-init
     - make terraform-validate
     - make terraform-plan
-    - echo wat
+    - echo what
 
   artifacts:
     when: always
