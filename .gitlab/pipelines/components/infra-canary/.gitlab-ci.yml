@@ -27,7 +27,6 @@ infra-canary_analyze:
 #   variables:
 #     ENVIRONMENT: dev
 #     STACK_NAME: infra-one
-#     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
 #   stage: mr_checks
 #   extends:
 #    - .comp_infra_canary
