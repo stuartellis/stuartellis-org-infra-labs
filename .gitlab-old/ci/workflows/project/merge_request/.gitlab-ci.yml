@@ -5,18 +5,18 @@ review_container_registry:
   stage: deploy_review
   variables:
     PRODUCT_NAME: labs
-    SUBSYSTEM_NAME: ctr-storage
+    COMPONENT_NAME: ctr-storage
     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
   trigger:
-    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge_request/.gitlab-ci.yml
+    include: .gitlab/ci/workflows/components/$COMPONENT_NAME/merge_request/.gitlab-ci.yml
     strategy: depend
 
 review_file_storage:
   stage: deploy_review
   variables:
     PRODUCT_NAME: labs
-    SUBSYSTEM_NAME: file-storage
+    COMPONENT_NAME: file-storage
     STACK_VARIANT: $CI_COMMIT_SHORT_SHA
   trigger:
-    include: .gitlab/ci/workflows/subsystems/$SUBSYSTEM_NAME/merge_request/.gitlab-ci.yml
+    include: .gitlab/ci/workflows/components/$COMPONENT_NAME/merge_request/.gitlab-ci.yml
     strategy: depend

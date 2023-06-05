@@ -101,3 +101,7 @@ terraform-install:
 	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip > terraform_1.4.6_linux_amd64.zip
 	cd $(ST_TF_BIN_DIR) && unzip terraform_1.4.6_linux_amd64.zip
 	cd $(ST_TF_BIN_DIR) && rm terraform_1.4.6_linux_amd64.zip
+
+.PHONY: terraform-validate
+terraform-check-fmt:
+	$(ST_TF_EXE) $(ST_CHDIR_OPT) validate

@@ -1,27 +1,13 @@
-stages:
-- analyze
-- merge_request
 
-# variables:
-#   ENVIRONMENT: dev
-#   PRODUCT_NAME: labs
-#   SUBSYSTEM_NAME: canary
-#   STACK_NAME: infra-one
-#   STACK_VARIANT: default
-#   RELEASE_VERSION: 0.2.0
+include:
 
-analyze_code:
-  stage: analyze
-  trigger:
-    include: .gitlab/ci/workflows/project/analyze/terraform/.gitlab-ci.yml
-    strategy: depend
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  - local: '.gitlab/shared/core/stages/.gitlab-ci.yml'
+  - local: '.gitlab/shared/rules/stages/.gitlab-ci.yml'
+  - local: '.gitlab/shared/actions/terraform/.gitlab-ci.yml'
 
-merge_request:
-  stage: merge_request
-  trigger:
-    include: .gitlab/ci/workflows/project/merge_request/.gitlab-ci.yml
-    strategy: depend
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  ################################################################################
+
+  # Components #
+
+  # ctr-storage (default variant)
+  - local: '.gitlab/pipelines/components/infra-canary/.gitlab-ci.yml'

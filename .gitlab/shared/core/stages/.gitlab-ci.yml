@@ -1,0 +1,5 @@
+stages:
+  - analyze
+  - merge_request
+  - review
+  - release

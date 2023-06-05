@@ -1,0 +1,54 @@
+
+.action_analyze_terraform:
+  image: alpine:3.18.0
+  before_script:
+    - apk add --no-cache curl git jq make unzip
+  script:
+    - make terraform-install
+    - make terraform-check-fmt
+    - make terraform-init
+    - make terraform-validate
+
+.action_plan_terraform:
+  image: alpine:3.18.0
+  before_script:
+    - apk add --no-cache curl git jq make unzip
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-plan
+  artifacts:
+    when: on_success
+    name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/terraform
+
+.action_deploy_tf_review:
+  image: alpine:3.18.0
+  before_script:
+    - apk add --no-cache curl git make unzip
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-apply
+  dependencies:
+    - plan_terraform
+  environment:
+    name: dev/$STACK_VARIANT
+    deployment_tier: development
+    on_stop: .action_stop_tf_review
+    # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
+
+.action_stop_tf_review:
+  image: alpine:3.18.0
+  before_script:
+    - apk add --no-cache curl git make unzip
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-destroy
+  environment:
+    name: dev/$STACK_VARIANT
+    action: stop
+  when: manual
