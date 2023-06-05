@@ -16,11 +16,11 @@ infra-canary_analyze:
     RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
     RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
   stage: analyze
+  needs: []
   extends:
    - .comp_infra_canary
    - .rules_analyze
    - .action_analyze_terraform
-  needs: []
 
 # infra-canary_mr_checks:
 #   variables:
@@ -41,11 +41,11 @@ infra-canary_plan_dev:
     RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
   stage: review
+  needs: ["infra-canary_analyze"]
   extends:
     - .comp_infra_canary
     - .rules_plan
     - .action_plan_terraform
-  needs: ["infra-canary_analyze"]
 
 infra-canary_review_dev:
   variables:
@@ -54,11 +54,13 @@ infra-canary_review_dev:
     RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
     RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
   stage: review
+  needs: ["infra-canary_plan_dev"]
+  dependencies:
+    - infra-canary_plan_dev
   extends:
     - .comp_infra_canary
     - .rules_review
     - .action_deploy_tf_review
-  needs: ["infra-canary_plan_dev"]
 
 # infra-canary_release:
   # variables:
