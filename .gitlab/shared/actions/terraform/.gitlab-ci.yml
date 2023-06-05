@@ -23,7 +23,7 @@
     - exit $TF_PLAN_EXIT_CODE
 
   artifacts:
-    when: on_success
+    when: always
     name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
     expire_in: 1 week
     paths:
