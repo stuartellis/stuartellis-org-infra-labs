@@ -20,7 +20,7 @@ infra-canary_analyze:
   extends:
    - .comp_infra_canary
    - .rules_analyze
-   - .action_analyze-terraform
+   - .action_analyze_terraform
   needs: []
 
 # infra-canary_mr_checks:
