@@ -33,7 +33,7 @@
     - make terraform-init
     - make terraform-apply
   dependencies:
-    - plan_terraform
+    - .action_plan_terraform
   environment:
     name: dev/$STACK_VARIANT
     deployment_tier: development
