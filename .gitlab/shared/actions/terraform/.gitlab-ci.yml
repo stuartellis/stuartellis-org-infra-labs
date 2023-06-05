@@ -19,7 +19,6 @@
     - make terraform-validate
     - make terraform-plan
     - TF_PLAN_EXIT_CODE=$?
-    - echo ZZZ
     - echo $TF_PLAN_EXIT_CODE > tmp/terraform/result-code.txt
     - exit $TF_PLAN_EXIT_CODE
 
@@ -35,7 +34,7 @@
   before_script:
     - apk add --no-cache curl git make unzip
   script:
-    - cat tmp/terraform/result-code.txt
+    - cat $CI_PROJECT_DIR/tmp/terraform/result-code.txt
     - make terraform-install
     - make terraform-init
     - make terraform-apply
