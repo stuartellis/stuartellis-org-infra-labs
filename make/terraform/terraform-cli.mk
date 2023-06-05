@@ -103,5 +103,5 @@ terraform-install:
 	cd $(ST_TF_BIN_DIR) && rm terraform_1.4.6_linux_amd64.zip
 
 .PHONY: terraform-validate
-terraform-check-fmt:
+terraform-validate:
 	$(ST_TF_EXE) $(ST_CHDIR_OPT) validate
