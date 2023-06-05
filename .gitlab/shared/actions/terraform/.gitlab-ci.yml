@@ -6,8 +6,6 @@
   script:
     - make terraform-install
     - make terraform-check-fmt
-    - make terraform-init
-    - make terraform-validate
 
 .action_plan_terraform:
   image: alpine:3.18.0
@@ -16,6 +14,7 @@
   script:
     - make terraform-install
     - make terraform-init
+    - make terraform-validate
     - make terraform-plan
   artifacts:
     when: on_success

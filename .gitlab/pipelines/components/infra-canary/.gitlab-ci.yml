@@ -56,7 +56,7 @@ infra-canary_review_dev:
     - infra-canary_plan_dev
   extends:
     - .comp_infra_canary
-    - .rules_review
+    - .rules_deploy_review
     - .action_deploy_tf_review
 
 # infra-canary_release:
