@@ -1,3 +1,3 @@
 # GitLab Configuration
 
-6
+7
