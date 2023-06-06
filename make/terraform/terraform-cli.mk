@@ -89,7 +89,7 @@ terraform-init:
 .PHONY: terraform-plan
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
-	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT)
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT) || true
 	TF_PLAN_EXIT_CODE=$$?
 	echo $$TF_PLAN_EXIT_CODE > $(ST_TF_TMP_DIR)/result-code.txt
 	@echo "command exited with $$TF_PLAN_EXIT_CODE"
