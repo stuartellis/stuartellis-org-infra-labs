@@ -13,5 +13,4 @@ include:
 
   # Components #
 
-  # ctr-storage (default variant)
   - local: '.gitlab/pipelines/components/**/.gitlab-ci.yml'
