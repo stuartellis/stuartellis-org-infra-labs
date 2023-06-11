@@ -89,13 +89,15 @@ terraform-init:
 .PHONY: terraform-plan
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
+	RC=0
 	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT) || RC=$$?
-	if [ $$RC -eq 0 ]; then   # Succeeded, diff is empty (no changes)
+	if [ $$RC -eq 0 ]; then
 		echo "INFO: no change"
 		echo $$RC > $(ST_TF_TMP_DIR)/result-code.txt
 	elif [ $$RC -eq 2 ]; then # Succeeded, there is a diff
 		echo "INFO: CHANGES"
 		echo $$RC > $(ST_TF_TMP_DIR)/result-code.txt
+		exit 0
 	else                     # Errored
 		exit 1
 	fi
