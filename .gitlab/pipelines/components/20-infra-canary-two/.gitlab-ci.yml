@@ -6,7 +6,7 @@
     Component_NAME: infra-canary-two
     PRODUCT_NAME: labs
     STACK_VARIANT: default
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/*"
+    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/*.*"
     RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 ## Stages
