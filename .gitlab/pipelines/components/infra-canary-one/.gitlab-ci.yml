@@ -1,18 +1,20 @@
 
 ## Component Definition
 
-.comp_infra_canary:
+.comp_infra_canary_one:
   variables:
-    COMPONENT_NAME: infra-canary
+    COMPONENT_NAME: infra-canary-one
     PRODUCT_NAME: labs
     STACK_VARIANT: default
     RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
+
+    # FIXME
     # RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
     RULES_CHANGES_PATH_2: ".gitlab/**/*"
 
 ## Stages
 
-infra-canary_analyze:
+infra-canary_analyze_one:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
@@ -33,32 +35,32 @@ infra-canary_analyze:
 #    - .stage_mr_checks
 #   needs: ["infra-canary_analyze"]
 
-infra-canary_plan_dev:
+infra-canary_one_plan_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
   stage: review
-  needs: ["infra-canary_analyze"]
+  needs: ["infra-canary_one_analyze"]
   extends:
     - .comp_infra_canary
     - .rules_plan
     - .action_plan_terraform
 
-infra-canary_review_dev:
+infra-canary_one_review_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
   stage: review
-  needs: ["infra-canary_plan_dev"]
+  needs: ["infra-canary_one_plan_dev"]
   dependencies:
     - infra-canary_plan_dev
   extends:
-    - .comp_infra_canary
+    - .comp_infra_canary_one
     - .rules_deploy_review
     - .action_deploy_tf_review
 
-# infra-canary_release:
+# infra-canary_one_release:
   # variables:
   #   ENVIRONMENT: dev
   #   STACK_NAME: infra-one

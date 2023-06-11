@@ -10,4 +10,5 @@ include:
   # Components #
 
   # ctr-storage (default variant)
-  - local: '.gitlab/pipelines/components/infra-canary/.gitlab-ci.yml'
+  - local: '.gitlab/pipelines/components/infra-canary-one/.gitlab-ci.yml'
+  - local: '.gitlab/pipelines/components/infra-canary-two/.gitlab-ci.yml'
