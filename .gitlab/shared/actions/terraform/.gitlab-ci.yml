@@ -1,6 +1,6 @@
 
 .action_analyze_terraform:
-  image: alpine:3.18.0
+  image: $CI_TF_IMAGE
   before_script:
     - apk add --no-cache curl git jq make unzip
   script:
@@ -8,7 +8,7 @@
     - make terraform-check-fmt
 
 .action_plan_terraform:
-  image: alpine:3.18.0
+  image: $CI_TF_IMAGE
   before_script:
     - apk add --no-cache curl git jq make unzip
   allow_failure:
@@ -19,15 +19,8 @@
     - make terraform-validate
     - make terraform-plan
 
-  artifacts:
-    when: always
-    name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
-    expire_in: 1 week
-    paths:
-      - tmp/terraform
-
 .action_deploy_tf_review:
-  image: alpine:3.18.0
+  image: $CI_TF_IMAGE
   before_script:
     - apk add --no-cache curl git make unzip
   script:
@@ -42,7 +35,7 @@
 #     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
 
 # .action_stop_tf_review:
-#   image: alpine:3.18.0
+#   image: $CI_TF_IMAGE
 #   before_script:
 #     - apk add --no-cache curl git make unzip
 #   script:

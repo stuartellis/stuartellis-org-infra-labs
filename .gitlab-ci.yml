@@ -1,3 +1,7 @@
+variables:
+  PROJECT_NAME: labs
+  CI_DEFAULT_IMAGE: alpine:3.18.0
+  CI_TF_IMAGE: $CI_DEFAULT_IMAGE
 
 include:
 

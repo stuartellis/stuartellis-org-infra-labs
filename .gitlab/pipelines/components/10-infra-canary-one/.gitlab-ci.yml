@@ -40,6 +40,12 @@ infra-canary-one_plan_dev:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
+  artifacts:
+    when: always
+    name: $PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/terraform
   stage: review
   needs: ["infra-canary-one_analyze"]
   extends:
