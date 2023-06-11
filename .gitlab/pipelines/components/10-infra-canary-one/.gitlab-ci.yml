@@ -1,7 +1,7 @@
 
 ## Component Definition
 
-.comp_infra_canary_one:
+.comp_infra-canary-one:
   variables:
     COMPONENT_NAME: infra-canary-one
     PRODUCT_NAME: labs
@@ -14,59 +14,59 @@
 
 ## Stages
 
-infra-canary_analyze_one:
+infra-canary-one_analyze:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
   stage: analyze
   needs: []
   extends:
-   - .comp_infra_canary
+   - .comp_infra-canary-one
    - .rules_analyze
    - .action_analyze_terraform
 
-# infra-canary_mr_checks:
+# infra-canary-one_mr_checks:
 #   variables:
 #     ENVIRONMENT: dev
 #     STACK_NAME: infra-one
 #   stage: mr_checks
 #   extends:
-#    - .comp_infra_canary
+#    - .comp_infra-canary-one
 #    - .stage_mr_checks
 #   needs: ["infra-canary_analyze"]
 
-infra-canary_one_plan_dev:
+infra-canary-one_plan_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
   stage: review
-  needs: ["infra-canary_one_analyze"]
+  needs: ["infra-canary-one_analyze"]
   extends:
-    - .comp_infra_canary
+    - .comp_infra-canary-one
     - .rules_plan
     - .action_plan_terraform
 
-infra-canary_one_review_dev:
+infra-canary-one_review_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
   stage: review
-  needs: ["infra-canary_one_plan_dev"]
+  needs: ["infra-canary-one_plan_dev"]
   dependencies:
     - infra-canary_plan_dev
   extends:
-    - .comp_infra_canary_one
+    - .comp_infra-canary-one
     - .rules_deploy_review
     - .action_deploy_tf_review
 
-# infra-canary_one_release:
+# infra-canary-one_release:
   # variables:
   #   ENVIRONMENT: dev
   #   STACK_NAME: infra-one
   #   TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
 #   stage: release
 #   extends:
-#    - .comp_infra_canary
+#    - .comp_infra-canary-one
 #    - .stage_release
-#   needs: ["infra-canary_analyze"]
+#   needs: ["infra-canary-one_analyze"]
