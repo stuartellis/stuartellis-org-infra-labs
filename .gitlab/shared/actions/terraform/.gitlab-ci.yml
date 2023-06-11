@@ -24,7 +24,6 @@
   before_script:
     - apk add --no-cache curl git make unzip
   script:
-    - cat $CI_PROJECT_DIR/tmp/terraform/result-code.txt
     - make terraform-install
     - make terraform-init
     - make terraform-apply
