@@ -60,7 +60,7 @@ infra-canary-two_review_dev:
   stage: review
   needs: ["infra-canary-two_plan_dev"]
   dependencies:
-    - infra-canary_plan_dev
+    - infra-canary-one_plan_dev
   extends:
     - .comp_infra-canary-two
     - .rules_deploy_review
