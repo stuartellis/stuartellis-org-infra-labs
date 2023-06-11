@@ -7,5 +7,5 @@ resource "aws_ssm_parameter" "stack_present" {
 resource "aws_ssm_parameter" "stack_param_one" {
   name  = "/stacks/${var.environment}/${var.product_name}/${var.stack_name}/${var.variant}/one"
   type  = "String"
-  value = "ABC0007"
+  value = "ABC0008"
 }
