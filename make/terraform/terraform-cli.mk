@@ -21,6 +21,8 @@ ST_VARS_OPT       := -var="product_name=$(PRODUCT_NAME)" -var="stack_name=$(STAC
 ST_VAR_FILES_OPT  := -var-file=$(ST_STACKS_ENVS_DIR)/all/$(STACK_NAME).tfvars -var-file=$(ST_STACKS_ENVS_DIR)/$(ENVIRONMENT)/$(STACK_NAME).tfvars
 
 # Terraform plan
+ST_FLAG_FILE		:= $(TF_STATE_NAME)-tf-plan-result-code.txt
+ST_FLAG_PATH		:= $(ST_TF_TMP_DIR)/$(ST_FLAG_FILE)
 ST_PLAN_FILE		:= $(TF_STATE_NAME).tfplan
 ST_PLAN_PATH		:= $(ST_TF_TMP_DIR)/$(ST_PLAN_FILE)
 ST_PLAN_OPT			:= -detailed-exitcode -out=$(ST_PLAN_PATH)
@@ -28,7 +30,7 @@ ST_PLAN_OPT			:= -detailed-exitcode -out=$(ST_PLAN_PATH)
 ST_TF_PLAN_JSON		:= $(ST_TF_TMP_DIR)/$(TF_STATE_NAME)-plan.json
 
 ST_CHDIR_OPT		:= -chdir=$(TF_ROOT)
-GL_TF_PLAN_FILTER 	:= jq -r '([.resource_changes[]?.change.actions?]|flatten)|{"create":(map(select(.=="create"))|length),"update":(map(select(.=="update"))|length),"delete":(map(select(.=="delete"))|length)}'
+GL_TF_PLAN_FILTER 	:= jq -r '([.resouTF_PLAN_RESULT_CODEe_changes[]?.change.actions?]|flatten)|{"create":(map(select(.=="create"))|length),"update":(map(select(.=="update"))|length),"delete":(map(select(.=="delete"))|length)}'
 
 ##  Variables for GitLab ##
 # TF_IN_AUTOMATION 	:= true
@@ -64,7 +66,17 @@ endif
 
 .PHONY: terraform-apply
 terraform-apply:
-	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) apply -auto-approve $(ST_PLAN_PATH)
+	TF_PLAN_RESULT_CODE=2
+	cat $(ST_FLAG_PATH) || TF_PLAN_RESULT_CODE
+	if [ $$TF_PLAN_RESULT_CODE -eq 0 ]; then
+		echo "INFO: no change"
+	elif [ $$TF_PLAN_RESULT_CODE -eq 2 ]; then # Succeeded, there is a diff
+		echo "INFO: CHANGES"
+		$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) apply $(ST_PLAN_PATH)
+		exit 0
+	else                     # Errored
+		exit 1
+	fi
 
 .PHONY: terraform-check-fmt
 terraform-check-fmt:
@@ -89,14 +101,14 @@ terraform-init:
 .PHONY: terraform-plan
 terraform-plan:
 	mkdir -p $(ST_TF_TMP_DIR)
-	RC=0
-	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT) || RC=$$?
-	if [ $$RC -eq 0 ]; then
+	TF_PLAN_RESULT_CODE=0
+	$(ST_BACKEND_ENV_VARS) $(ST_TF_EXE) $(ST_CHDIR_OPT) plan $(ST_PLAN_OPT) $(ST_VARS_OPT) $(ST_VAR_FILES_OPT) || TF_PLAN_RESULT_CODE=$$?
+	if [ $$TF_PLAN_RESULT_CODE -eq 0 ]; then
 		echo "INFO: no change"
-		echo $$RC > $(ST_TF_TMP_DIR)/result-code.txt
-	elif [ $$RC -eq 2 ]; then # Succeeded, there is a diff
+		echo $$TF_PLAN_RESULT_CODE > $(ST_FLAG_PATH)
+	elif [ $$TF_PLAN_RESULT_CODE -eq 2 ]; then # Succeeded, there is a diff
 		echo "INFO: CHANGES"
-		echo $$RC > $(ST_TF_TMP_DIR)/result-code.txt
+		echo $$TF_PLAN_RESULT_CODE > $(ST_FLAG_PATH)
 		exit 0
 	else                     # Errored
 		exit 1
