@@ -67,7 +67,7 @@ endif
 .PHONY: terraform-apply
 terraform-apply:
 	TF_PLAN_RESULT_CODE=2
-	cat $(ST_FLAG_PATH) | TF_PLAN_RESULT_CODE
+	TF_PLAN_RESULT_CODE=$$(cat $(ST_FLAG_PATH))
 	if [ $$TF_PLAN_RESULT_CODE -eq 0 ]; then
 		echo "INFO: no change"
 	elif [ $$TF_PLAN_RESULT_CODE -eq 2 ]; then # Succeeded, there is a diff
