@@ -3,11 +3,9 @@
 
 .comp_infra-canary-two:
   variables:
-    Component_NAME: infra-canary-two
+    COMPONENT_NAME: infra-canary-two
     PRODUCT_NAME: labs
     STACK_VARIANT: default
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/*.*"
-    RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 ## Stages
 
@@ -17,9 +15,10 @@ infra-canary-two_analyze:
     STACK_NAME: infra-two
   stage: analyze
   needs: []
+  rules:
+    - !reference [.rules_tf_analyze, rules]
   extends:
    - .comp_infra-canary-two
-   - .rules_tf_analyze
    - .action_analyze_terraform
 
 # infra-canary-two_mr_checks:
@@ -44,10 +43,13 @@ infra-canary-two_plan_dev:
     paths:
       - tmp/terraform
   stage: review
-  needs: ["infra-canary-two_analyze"]
+  needs:
+    - "infra-canary-one_review_dev"
+    - "infra-canary-two_analyze"
+  rules:
+    - !reference [.rules_tf_plan, rules]
   extends:
     - .comp_infra-canary-two
-    - .rules_tf_plan
     - .action_plan_terraform
 
 infra-canary-two_review_dev:
@@ -56,11 +58,12 @@ infra-canary-two_review_dev:
     STACK_NAME: infra-two
   stage: review
   needs: ["infra-canary-two_plan_dev"]
+  rules:
+    - !reference [.rules_tf_deploy_review, rules]
   dependencies:
     - infra-canary-two_plan_dev
   extends:
     - .comp_infra-canary-two
-    - .rules_tf_deploy_review
     - .action_deploy_tf_review
 
 # infra-canary-two_release:
