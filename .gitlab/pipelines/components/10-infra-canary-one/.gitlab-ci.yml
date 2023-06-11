@@ -16,7 +16,7 @@ infra-canary-one_analyze:
   stage: analyze
   needs: []
   rules:
-    - !reference [.rules_analyze, rules]
+    - !reference [.rules_tf_analyze, rules]
   extends:
    - .comp_infra-canary-one
    - .action_analyze_terraform
@@ -44,9 +44,10 @@ infra-canary-one_plan_dev:
       - tmp/terraform
   stage: review
   needs: ["infra-canary-one_analyze"]
+  rules:
+    - !reference [.rules_tf_plan, rules]
   extends:
     - .comp_infra-canary-one
-    - .rules_plan
     - .action_plan_terraform
 
 infra-canary-one_review_dev:
@@ -55,11 +56,12 @@ infra-canary-one_review_dev:
     STACK_NAME: infra-one
   stage: review
   needs: ["infra-canary-one_plan_dev"]
+  rules:
+    - !reference [.rules_tf_deploy_review, rules]
   dependencies:
     - infra-canary-one_plan_dev
   extends:
     - .comp_infra-canary-one
-    - .rules_deploy_review
     - .action_deploy_tf_review
 
 # infra-canary-one_release:

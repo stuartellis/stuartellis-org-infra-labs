@@ -19,7 +19,7 @@ infra-canary-two_analyze:
   needs: []
   extends:
    - .comp_infra-canary-two
-   - .rules_analyze
+   - .rules_tf_analyze
    - .action_analyze_terraform
 
 # infra-canary-two_mr_checks:
@@ -47,7 +47,7 @@ infra-canary-two_plan_dev:
   needs: ["infra-canary-two_analyze"]
   extends:
     - .comp_infra-canary-two
-    - .rules_plan
+    - .rules_tf_plan
     - .action_plan_terraform
 
 infra-canary-two_review_dev:
@@ -60,7 +60,7 @@ infra-canary-two_review_dev:
     - infra-canary-two_plan_dev
   extends:
     - .comp_infra-canary-two
-    - .rules_deploy_review
+    - .rules_tf_deploy_review
     - .action_deploy_tf_review
 
 # infra-canary-two_release:

@@ -16,7 +16,7 @@
 #     - when: manual
 #       allow_failure: true
 
-.rules_analyze:
+.rules_tf_analyze:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -31,7 +31,7 @@
         - "terraform1/stacks/definitions/$STACK_NAME/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_mr_checks:
+.rules_tf_mr_checks:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -41,10 +41,10 @@
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - $RULES_CHANGES_PATH_1
-        - $RULES_CHANGES_PATH_2
+        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_plan:
+.rules_tf_plan:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -54,10 +54,10 @@
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - $RULES_CHANGES_PATH_1
-        - $RULES_CHANGES_PATH_2
+        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_deploy_review:
+.rules_tf_deploy_review:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -67,10 +67,10 @@
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - $RULES_CHANGES_PATH_1
-        - $RULES_CHANGES_PATH_2
+        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_deploy_release:
+.rules_tf_deploy_release:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: always
@@ -80,5 +80,5 @@
       when: never
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       changes:
-        - $RULES_CHANGES_PATH_1
-        - $RULES_CHANGES_PATH_2
+        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
