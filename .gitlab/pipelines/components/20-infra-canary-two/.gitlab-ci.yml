@@ -1,9 +1,9 @@
 
-## Component Definition
+## Comptwont Definition
 
 .comp_infra-canary-two:
   variables:
-    COMPONENT_NAME: infra-canary-two
+    COMPtwoNT_NAME: infra-canary-two
     PRODUCT_NAME: labs
     STACK_VARIANT: default
     RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/**/*"
@@ -60,7 +60,7 @@ infra-canary-two_review_dev:
   stage: review
   needs: ["infra-canary-two_plan_dev"]
   dependencies:
-    - infra-canary-one_plan_dev
+    - infra-canary-two_plan_dev
   extends:
     - .comp_infra-canary-two
     - .rules_deploy_review
