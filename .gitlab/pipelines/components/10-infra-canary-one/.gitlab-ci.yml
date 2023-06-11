@@ -6,7 +6,7 @@
     COMPONENT_NAME: infra-canary-one
     PRODUCT_NAME: labs
     STACK_VARIANT: default
-    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/*.*"
+    RULES_CHANGES_PATH_1: "terraform1/stacks/definitions/$STACK_NAME/*"
     RULES_CHANGES_PATH_2: "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 ## Stages
@@ -17,9 +17,10 @@ infra-canary-one_analyze:
     STACK_NAME: infra-one
   stage: analyze
   needs: []
+  rules:
+    !reference [.rules_analyze, rules]
   extends:
    - .comp_infra-canary-one
-   - .rules_analyze
    - .action_analyze_terraform
 
 # infra-canary-one_mr_checks:
