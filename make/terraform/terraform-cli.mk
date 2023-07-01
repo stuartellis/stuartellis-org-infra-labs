@@ -1,4 +1,9 @@
 
+## Variables for Terraform ##
+
+TF_VERSION			:= 1.4.6
+TF_CPU_ARCH			:= amd64
+
 ## Variables for Stacks ##
 
 STACK_NAME          ?= NONE
@@ -121,9 +126,9 @@ terraform-show-json:
 .PHONY: terraform-install
 terraform-install:
 	mkdir -p $(ST_TF_BIN_DIR)
-	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip > terraform_1.4.6_linux_amd64.zip
-	cd $(ST_TF_BIN_DIR) && unzip terraform_1.4.6_linux_amd64.zip
-	cd $(ST_TF_BIN_DIR) && rm terraform_1.4.6_linux_amd64.zip
+	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/$(TF_VERSION)/terraform_$(TF_VERSION)_linux_amd64.zip > terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
+	cd $(ST_TF_BIN_DIR) && unzip terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
+	cd $(ST_TF_BIN_DIR) && rm terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
 
 .PHONY: terraform-validate
 terraform-validate:
