@@ -1,5 +1,6 @@
 stages:
   - analyze
   - merge_request
+  - plan
   - review
   - release
