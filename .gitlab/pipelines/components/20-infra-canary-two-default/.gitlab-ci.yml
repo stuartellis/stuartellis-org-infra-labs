@@ -80,7 +80,7 @@ infra-canary-two_stop_dev:
   environment:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
     deployment_tier: development
-#     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
+    action: stop
 
 # infra-canary-two_release:
 #   variables:
