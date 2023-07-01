@@ -1,1 +1,3 @@
-# Terraform Stack for testing
+# Terraform Stack: infra-one
+
+Canary stack.
