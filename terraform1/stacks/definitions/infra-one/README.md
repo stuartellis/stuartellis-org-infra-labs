@@ -2,4 +2,4 @@
 
 This is a canary stack for testing.
 
-It deploys SSM Parameters to AWS.
+It deploys parameters to SSM Parameter Store to AWS.
