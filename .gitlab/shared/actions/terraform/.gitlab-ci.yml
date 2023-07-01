@@ -36,6 +36,7 @@
     - make terraform-install
     - make terraform-init
     - make terraform-destroy
+  when: manual
 
 .action_deploy_tf_release:
   image: $CI_TF_IMAGE
