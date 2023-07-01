@@ -54,7 +54,7 @@ infra-canary-two_review_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-two
-  stage: start_review
+  stage: review
   needs: ["infra-canary-two_plan_dev"]
   rules:
     - !reference [.rules_tf_deploy_review, rules]
@@ -73,7 +73,7 @@ infra-canary-two_stop_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-two
-  stage: stop_review
+  stage: review
   extends:
     - .comp_infra-canary-two
     - .action_stop_tf_review

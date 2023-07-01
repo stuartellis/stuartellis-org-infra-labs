@@ -2,6 +2,6 @@ stages:
   - analyze
   - merge_request
   - plan
-  - start_review
-  - stop_review
+  - review
   - release
+  - decommission
