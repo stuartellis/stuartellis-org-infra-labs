@@ -3,7 +3,7 @@ stages:
 
 analyze_dummy:
   stage: analyze_dummy
-  image: alpine:3.18.0
+  image: alpine:3.18.2
   before_script:
     - apk add --no-cache curl git jq make unzip
   script:

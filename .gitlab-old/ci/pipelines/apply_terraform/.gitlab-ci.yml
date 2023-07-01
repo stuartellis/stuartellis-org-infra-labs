@@ -1,5 +1,5 @@
  deploy_terraform:
-  image: alpine:3.18.0
+  image: alpine:3.18.2
   stage: deploy
   before_script:
     - apk add --no-cache curl git make unzip
