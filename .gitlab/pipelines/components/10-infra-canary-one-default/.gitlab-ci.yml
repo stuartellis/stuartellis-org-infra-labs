@@ -54,7 +54,7 @@ infra-canary-one_review_dev:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
-  stage: review
+  stage: start_review
   needs: ["infra-canary-one_plan_dev"]
   rules:
     - !reference [.rules_tf_deploy_review, rules]
@@ -63,6 +63,24 @@ infra-canary-one_review_dev:
   extends:
     - .comp_infra-canary-one
     - .action_deploy_tf_review
+  environment:
+    name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+    deployment_tier: development
+    on_stop: .action_stop_tf_review
+#     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
+
+infra-canary-one_stop_dev:
+  variables:
+    ENVIRONMENT: dev
+    STACK_NAME: infra-one
+  stage: stop_review
+  extends:
+    - .comp_infra-canary-one
+    - .action_stop_tf_review
+  environment:
+    name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+    deployment_tier: development
+#     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
 
 # infra-canary-one_release:
 #   variables:

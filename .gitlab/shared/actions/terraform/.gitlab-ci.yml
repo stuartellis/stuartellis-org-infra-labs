@@ -27,21 +27,30 @@
     - make terraform-install
     - make terraform-init
     - make terraform-apply
-#   environment:
-#     name: dev/$STACK_VARIANT
-#     deployment_tier: development
-#     on_stop: .action_stop_tf_review
-#     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
 
-# .action_stop_tf_review:
-#   image: $CI_TF_IMAGE
-#   before_script:
-#     - apk add --no-cache curl git make unzip
-#   script:
-#     - make terraform-install
-#     - make terraform-init
-#     - make terraform-destroy
-#   environment:
-#     name: dev/$STACK_VARIANT
-#     action: stop
-#   when: manual
+.action_stop_tf_review:
+  image: $CI_TF_IMAGE
+  before_script:
+    - apk add --no-cache curl git make unzip
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-destroy
+  when: manual
+
+.action_deploy_tf_release:
+  image: $CI_TF_IMAGE
+  before_script:
+    - apk add --no-cache curl git make unzip
+  script:
+    - make terraform-install
+    - make terraform-init
+    - make terraform-apply
+
+.action_tag_release:
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - echo "Tag release"
+  release:
+    tag_name: $ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT-$RELEASE_VERSION
+    description: 'Release $ENVIRONMENT $COMPONENT_NAME $STACK_VARIANT $RELEASE_VERSION'
