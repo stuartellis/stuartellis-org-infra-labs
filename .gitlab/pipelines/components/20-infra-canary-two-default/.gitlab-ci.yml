@@ -74,6 +74,8 @@ infra-canary-two_stop_dev:
     ENVIRONMENT: dev
     STACK_NAME: infra-two
   stage: review
+  rules:
+    - !reference [.rules_tf_stop_review, rules]
   extends:
     - .comp_infra-canary-two
     - .action_stop_tf_review

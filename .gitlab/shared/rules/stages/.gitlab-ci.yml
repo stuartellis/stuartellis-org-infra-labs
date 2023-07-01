@@ -70,6 +70,11 @@
         - "terraform1/stacks/definitions/$STACK_NAME/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
+.rules_tf_stop_review:
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+      when: manual
+
 .rules_tf_deploy_release:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
