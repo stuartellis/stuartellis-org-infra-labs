@@ -53,6 +53,7 @@ infra-canary-one_review_dev:
   extends:
     - .comp_infra-canary-one
     - .action_deploy_tf_review
+  resource_group: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
   environment:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
     deployment_tier: development
@@ -107,7 +108,7 @@ infra-canary-one_release_test:
   extends:
     - .comp_infra-canary-one
     - .action_deploy_tf_release
-  # resource_group: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+  resource_group: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
   environment:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
     deployment_tier: testing
