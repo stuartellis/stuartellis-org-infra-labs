@@ -37,6 +37,8 @@
       when: never
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       when: never
+    - if: '$CI_PIPELINE_SOURCE != $CI_DEFAULT_BRANCH'
+      when: on_success
 
 .rules_mr_trigger_tf:
   rules:
