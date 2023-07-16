@@ -1,8 +1,10 @@
 stages:
-  - analyze
-  - merge_request
-  - plan
+  - analyze-pre-commit
+  - analyze-linting
+  - test-code
+  - build-app-artifacts
+  - build-tf-plan
   - review
-  - release
-  - post_release
+  - deploy-release
+  - tag-release
   - decommission

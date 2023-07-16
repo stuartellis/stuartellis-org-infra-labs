@@ -13,7 +13,7 @@ infra-canary-one_analyze:
   variables:
     ENVIRONMENT: dev
     STACK_NAME: infra-one
-  stage: analyze
+  stage: analyze-linting
   needs: []
   rules:
     - !reference [.rules_branch_tf_push, rules]
@@ -32,7 +32,7 @@ infra-canary-one_plan_dev:
     expire_in: 1 week
     paths:
       - tmp/terraform
-  stage: plan
+  stage: build-tf-plan
   needs: ["infra-canary-one_analyze"]
   rules:
     - !reference [.rules_branch_tf_push, rules]
@@ -87,7 +87,7 @@ infra-canary-one_plan_test:
     expire_in: 1 week
     paths:
       - tmp/terraform
-  stage: plan
+  stage: build-tf-plan
   needs: ["infra-canary-one_analyze"]
   rules:
     - !reference [.rules_branch_tf_push, rules]
@@ -99,7 +99,7 @@ infra-canary-one_release_test:
   variables:
     ENVIRONMENT: test
     STACK_NAME: infra-one
-  stage: release
+  stage: deploy-release
   needs: ["infra-canary-one_plan_test"]
   rules:
     - !reference [.rules_branch_tf_push, rules]
@@ -118,7 +118,7 @@ infra-canary-one_tag_test:
   variables:
     ENVIRONMENT: test
     STACK_NAME: infra-one
-  stage: post_release
+  stage: tag-release
   needs: ["infra-canary-one_release_test"]
   rules:
     - !reference [.rules_branch_tf_push, rules]
