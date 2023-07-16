@@ -22,11 +22,24 @@
 # - if: $CI_COMMIT_TAG
 #   when: never
 
-.rules_branch_tf_push:
+.rules_mr_trigger_tf:
   rules:
     - if: $CI_COMMIT_TAG
       when: never
-    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
+        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
+
+.rules_main_trigger_tf:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       changes:
         - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"

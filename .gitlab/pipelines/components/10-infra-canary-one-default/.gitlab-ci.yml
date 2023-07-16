@@ -16,7 +16,7 @@ infra-canary-one_analyze:
   stage: analyze-linting
   needs: []
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_mr_trigger_tf, rules]
   extends:
    - .comp_infra-canary-one
    - .action_analyze_terraform
@@ -35,7 +35,7 @@ infra-canary-one_plan_dev:
   stage: build-tf-plan
   needs: ["infra-canary-one_analyze"]
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_mr_trigger_tf, rules]
   extends:
     - .comp_infra-canary-one
     - .action_plan_terraform
@@ -47,7 +47,7 @@ infra-canary-one_review_dev:
   stage: review
   needs: ["infra-canary-one_plan_dev"]
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_mr_trigger_tf, rules]
   dependencies:
     - infra-canary-one_plan_dev
   extends:
@@ -66,7 +66,7 @@ infra-canary-one_review_dev:
 #     STACK_NAME: infra-one
 #   stage: review
 #   rules:
-#     - !reference [.rules_branch_tf_push, rules]
+#     - !reference [.rules_mr_trigger_tf, rules]
 #   extends:
 #     - .comp_infra-canary-one
 #     - .action_deploy_tf_review
@@ -90,7 +90,7 @@ infra-canary-one_plan_test:
   stage: build-tf-plan
   needs: ["infra-canary-one_analyze"]
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_main_trigger_tf, rules]
   extends:
     - .comp_infra-canary-one
     - .action_plan_terraform
@@ -102,7 +102,7 @@ infra-canary-one_release_test:
   stage: deploy-release
   needs: ["infra-canary-one_plan_test"]
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_main_trigger_tf, rules]
   dependencies:
     - infra-canary-one_plan_test
   extends:
@@ -121,7 +121,7 @@ infra-canary-one_tag_test:
   stage: tag-release
   needs: ["infra-canary-one_release_test"]
   rules:
-    - !reference [.rules_branch_tf_push, rules]
+    - !reference [.rules_main_trigger_tf, rules]
   extends:
    - .comp_infra-canary-one
    - .action_tag_release
