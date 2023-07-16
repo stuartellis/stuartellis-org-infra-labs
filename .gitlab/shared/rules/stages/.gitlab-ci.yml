@@ -16,74 +16,47 @@
 #     - when: manual
 #       allow_failure: true
 
-.rules_tf_analyze:
+    # - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    #   when: always
+    # - if: '$CI_PIPELINE_SOURCE == "push"'
+    #   when: never
+    # - if: $CI_COMMIT_TAG
+    #   when: never
+
+.rules_branch_tf_analyze:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
     - if: '$CI_PIPELINE_SOURCE == "push"'
       changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
-        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_tf_mr_checks:
+.rules_branch_tf_branch_checks:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_COMMIT_BRANCH == "push"'
       changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_tf_plan:
+.rules_branch_tf_plan:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_COMMIT_BRANCH == "push"'
       changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_tf_deploy_review:
+.rules_branch_tf_deploy_review:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_COMMIT_BRANCH == "push"'
       changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
+        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
-.rules_tf_stop_review:
+.rules_branch_tf_stop_review:
   rules:
-    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_BRANCH == "push"'
       when: manual
 
-.rules_tf_deploy_release:
+.rules_branch_tf_deploy_release:
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/*"
-        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
+    - if: $CI_COMMIT_BRANCH == "push"'
+      when: manual
