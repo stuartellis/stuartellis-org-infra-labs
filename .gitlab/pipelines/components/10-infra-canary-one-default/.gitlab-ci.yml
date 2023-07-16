@@ -75,15 +75,15 @@ infra-canary-one_stop_dev:
     action: stop
   when: manual
 
-# infra-canary-one_release_test:
-#   variables:
-#     ENVIRONMENT: test
-#     STACK_NAME: infra-one
-#     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
-#   stage: release
-#   needs: ["infra-canary-one_review_dev"]
-#   rules:
-#     - !reference [.rules_branch_tf_deploy_release, rules]
-#   extends:
-#    - .comp_infra-canary-one
-#    - .rules_branch_tf_deploy_release
+infra-canary-one_release_test:
+  variables:
+    ENVIRONMENT: test
+    STACK_NAME: infra-one
+    TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
+  stage: release
+  needs: ["infra-canary-one_review_dev"]
+  rules:
+    - !reference [.rules_branch_tf_deploy_release, rules]
+  extends:
+   - .comp_infra-canary-one
+   - .rules_branch_tf_deploy_release
