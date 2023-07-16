@@ -28,10 +28,3 @@
       changes:
         - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
-
-.rules_branch_tf_deploy_release:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "push"'
-      changes:
-        - "terraform1/stacks/definitions/$STACK_NAME/**/*"
-        - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"

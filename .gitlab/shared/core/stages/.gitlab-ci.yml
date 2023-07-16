@@ -4,4 +4,5 @@ stages:
   - plan
   - review
   - release
+  - post_release
   - decommission

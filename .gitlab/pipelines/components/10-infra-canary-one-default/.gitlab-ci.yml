@@ -113,3 +113,15 @@ infra-canary-one_release_test:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
     deployment_tier: testing
 #     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
+
+infra-canary-one_tag_test:
+  variables:
+    ENVIRONMENT: test
+    STACK_NAME: infra-one
+  stage: post_release
+  needs: ["infra-canary-one_release_test"]
+  rules:
+    - !reference [.rules_branch_tf_push, rules]
+  extends:
+   - .comp_infra-canary-one
+   - .action_tag_release
