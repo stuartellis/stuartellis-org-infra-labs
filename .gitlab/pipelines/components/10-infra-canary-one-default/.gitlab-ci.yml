@@ -98,11 +98,17 @@ infra-canary-one_release_test:
   variables:
     ENVIRONMENT: test
     STACK_NAME: infra-one
-    TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$STACK_NAME-$ENVIRONMENT-$STACK_VARIANT-plan.json
   stage: release
   needs: ["infra-canary-one_plan_test"]
   rules:
-    - !reference [.rules_branch_tf_deploy_release, rules]
+    - !reference [.rules_branch_tf_push, rules]
+  dependencies:
+    - infra-canary-one_plan_test
   extends:
-   - .comp_infra-canary-one
-   - .rules_branch_tf_deploy_release
+    - .comp_infra-canary-one
+    - .action_deploy_tf_release
+  # resource_group: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+  environment:
+    name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+    deployment_tier: testing
+#     # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
