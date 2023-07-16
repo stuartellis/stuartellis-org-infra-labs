@@ -65,14 +65,15 @@ infra-canary-one_stop_dev:
     STACK_NAME: infra-one
   stage: review
   rules:
-    - !reference [.rules_branch_tf_stop_review, rules]
+    - !reference [.rules_branch_tf_push, rules]
   extends:
     - .comp_infra-canary-one
-    - .action_stop_tf_review
+    - .action_deploy_tf_review
   environment:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
     deployment_tier: development
     action: stop
+  when: manual
 
 # infra-canary-one_release_test:
 #   variables:
