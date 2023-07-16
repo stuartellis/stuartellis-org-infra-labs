@@ -49,7 +49,7 @@
 .action_tag_release:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   script:
-    - echo "Tag release"
+    - echo "Tag release $ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT-$RELEASE_VERSION"
   release:
-    tag_name: $RELEASE_VERSION-$ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT
-    description: 'Release $RELEASE_VERSION $ENVIRONMENT $COMPONENT_NAME $STACK_VARIANT'
+    tag_name: $ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT-$RELEASE_VERSION
+    description: 'Release $RELEASE_VERSION for $ENVIRONMENT $COMPONENT_NAME $STACK_VARIANT'
