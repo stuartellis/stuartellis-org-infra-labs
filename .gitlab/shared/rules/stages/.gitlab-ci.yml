@@ -32,31 +32,31 @@
 
 .rules_branch_tf_branch_checks:
   rules:
-    - if: $CI_COMMIT_BRANCH == "push"'
+    - if: '$CI_COMMIT_BRANCH == "push"'
       changes:
         - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 .rules_branch_tf_plan:
   rules:
-    - if: $CI_COMMIT_BRANCH == "push"'
+    - if: '$CI_COMMIT_BRANCH == "push"'
       changes:
         - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 .rules_branch_tf_deploy_review:
   rules:
-    - if: $CI_COMMIT_BRANCH == "push"'
+    - if: '$CI_COMMIT_BRANCH == "push"'
       changes:
         - "terraform1/stacks/definitions/$STACK_NAME/**/*"
         - "terraform1/stacks/environments/**/$STACK_NAME.tfvars"
 
 .rules_branch_tf_stop_review:
   rules:
-    - if: $CI_COMMIT_BRANCH == "push"'
+    - if: '$CI_COMMIT_BRANCH == "push"'
       when: manual
 
 .rules_branch_tf_deploy_release:
   rules:
-    - if: $CI_COMMIT_BRANCH == "push"'
+    - if: '$CI_COMMIT_BRANCH == "push"'
       when: manual
