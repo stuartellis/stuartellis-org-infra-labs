@@ -9,7 +9,7 @@ include:
   # Shared inclusions #
 
   - local: '.gitlab/shared/core/stages/.gitlab-ci.yml'
-  - local: '.gitlab/shared/rules/stages/.gitlab-ci.yml'
+  - local: '.gitlab/shared/rules/standard/.gitlab-ci.yml'
   - local: '.gitlab/shared/actions/terraform/.gitlab-ci.yml'
 
   ################################################################################
