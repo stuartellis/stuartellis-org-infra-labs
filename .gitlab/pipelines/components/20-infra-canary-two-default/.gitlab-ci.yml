@@ -16,19 +16,19 @@ infra-canary-two_analyze:
   stage: analyze
   needs: []
   rules:
-    - !reference [.rules_mr_tf_analyze, rules]
+    - !reference [.rules_branch_tf_analyze, rules]
   extends:
    - .comp_infra-canary-two
    - .action_analyze_terraform
 
-# infra-canary-two_mr_checks:
+# infra-canary-two_branch_checks:
 #   variables:
 #     ENVIRONMENT: dev
 #     STACK_NAME: infra-two
 #   stage: mr_checks
 #   extends:
 #    - .comp_infra-canary-two
-#    - .stage_mr_checks
+#    - .stage_branch_checks
 #   needs: ["infra-canary_analyze"]
 
 infra-canary-two_plan_dev:
@@ -45,7 +45,7 @@ infra-canary-two_plan_dev:
   stage: plan
   needs: ["infra-canary-two_analyze"]
   rules:
-    - !reference [.rules_mr_tf_plan, rules]
+    - !reference [.rules_branch_tf_plan, rules]
   extends:
     - .comp_infra-canary-two
     - .action_plan_terraform
@@ -57,7 +57,7 @@ infra-canary-two_review_dev:
   stage: review
   needs: ["infra-canary-two_plan_dev"]
   rules:
-    - !reference [.rules_mr_tf_deploy_review, rules]
+    - !reference [.rules_branch_tf_deploy_review, rules]
   dependencies:
     - infra-canary-two_plan_dev
   extends:
@@ -75,7 +75,7 @@ infra-canary-two_stop_dev:
     STACK_NAME: infra-two
   stage: review
   rules:
-    - !reference [.rules_mr_tf_stop_review, rules]
+    - !reference [.rules_branch_tf_stop_review, rules]
   extends:
     - .comp_infra-canary-two
     - .action_stop_tf_review
@@ -92,7 +92,7 @@ infra-canary-two_stop_dev:
 #   stage: release
 #   needs: ["infra-canary-two_review_dev"]
 #   rules:
-#     - !reference [.rules_mr_tf_deploy_release, rules]
+#     - !reference [.rules_branch_tf_deploy_release, rules]
 #   extends:
 #    - .comp_infra-canary-two
-#    - .rules_mr_tf_deploy_release
+#    - .rules_branch_tf_deploy_release
