@@ -1,4 +1,3 @@
-
 .action_analyze_dummy:
   image: $CI_TF_IMAGE
   script:

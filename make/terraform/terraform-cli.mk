@@ -3,6 +3,7 @@
 
 TF_VERSION			:= 1.4.6
 TF_CPU_ARCH			:= amd64
+TF_OS_TYPE			:= linux
 
 ## Variables for Stacks ##
 
@@ -64,7 +65,8 @@ ifdef CI
 		TF_HTTP_RETRY_WAIT_MIN=$(TF_HTTP_RETRY_WAIT_MIN) \
 
 else
-	TF_RUN_CMD_OPTS   := -backend=false
+	TF_RUN_CMD_OPTS			:= -backend=false
+	ST_BACKEND_ENV_VARS		:=
 endif
 
 ## Targets ##
@@ -126,10 +128,14 @@ terraform-show-json:
 .PHONY: terraform-install
 terraform-install:
 	mkdir -p $(ST_TF_BIN_DIR)
-	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/$(TF_VERSION)/terraform_$(TF_VERSION)_linux_amd64.zip > terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
-	cd $(ST_TF_BIN_DIR) && unzip terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
-	cd $(ST_TF_BIN_DIR) && rm terraform_$(TF_VERSION)_linux_$(TF_CPU_ARCH).zip
+	cd $(ST_TF_BIN_DIR) && curl -L https://releases.hashicorp.com/terraform/$(TF_VERSION)/terraform_$(TF_VERSION)_$(TF_OS_TYPE)_$(TF_CPU_ARCH).zip > terraform_$(TF_VERSION)_$(TF_OS_TYPE)_$(TF_CPU_ARCH).zip
+	cd $(ST_TF_BIN_DIR) && unzip terraform_$(TF_VERSION)_$(TF_OS_TYPE)_$(TF_CPU_ARCH).zip
+	cd $(ST_TF_BIN_DIR) && rm terraform_$(TF_VERSION)_$(TF_OS_TYPE)_$(TF_CPU_ARCH).zip
+
+.PHONY: terraform-flush
+terraform-flush:
+	@rm -r $(ST_TF_BIN_DIR)
 
 .PHONY: terraform-validate
 terraform-validate:
-	$(ST_TF_EXE) $(ST_CHDIR_OPT) validate
+	@$(ST_TF_EXE) $(ST_CHDIR_OPT) validate

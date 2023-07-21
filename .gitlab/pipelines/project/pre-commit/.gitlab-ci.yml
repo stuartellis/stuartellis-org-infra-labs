@@ -1,12 +1,12 @@
-project_pre-commit_branch:
-  variables:
-    ENVIRONMENT: dev
-  stage: analyze-pre-commit
-  needs: []
-  rules:
-    - !reference [.rules_branch_trigger_anyfile, rules]
-  extends:
-   - .action_analyze_dummy
+# project_pre-commit_branch:
+#   variables:
+#     ENVIRONMENT: dev
+#   stage: analyze-pre-commit
+#   needs: []
+#   rules:
+#     - !reference [.rules_branch_trigger_anyfile, rules]
+#   extends:
+#     - .action_analyze_dummy
 
 project_pre-commit_default:
   variables:
@@ -16,4 +16,4 @@ project_pre-commit_default:
   rules:
     - !reference [.rules_default_trigger_anyfile, rules]
   extends:
-   - .action_analyze_dummy
+    - .action_analyze_dummy
