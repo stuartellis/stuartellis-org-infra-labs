@@ -1,4 +1,3 @@
-
 ## Component Definition
 
 .comp_bastion-service:
@@ -18,8 +17,8 @@ bastion-service_linting:
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
   extends:
-   - .comp_bastion-service
-   - .action_analyze_terraform
+    - .comp_bastion-service
+    - .action_analyze_terraform
 
 bastion-service_plan_dev:
   variables:
@@ -123,5 +122,5 @@ bastion-service_tag_test:
   rules:
     - !reference [.rules_main_trigger_tf, rules]
   extends:
-   - .comp_bastion-service
-   - .action_tag_release
+    - .comp_bastion-service
+    - .action_tag_release

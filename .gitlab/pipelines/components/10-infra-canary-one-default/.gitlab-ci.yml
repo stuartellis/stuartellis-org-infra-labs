@@ -1,4 +1,3 @@
-
 ## Component Definition
 
 .comp_infra-canary-one:
@@ -18,8 +17,8 @@ infra-canary-one_linting:
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
   extends:
-   - .comp_infra-canary-one
-   - .action_analyze_terraform
+    - .comp_infra-canary-one
+    - .action_analyze_terraform
 
 infra-canary-one_plan_dev:
   variables:
@@ -123,5 +122,5 @@ infra-canary-one_tag_test:
   rules:
     - !reference [.rules_main_trigger_tf, rules]
   extends:
-   - .comp_infra-canary-one
-   - .action_tag_release
+    - .comp_infra-canary-one
+    - .action_tag_release

@@ -16,4 +16,5 @@ ENVIRONMENT				?= dev
 
 PRODUCT_NAME			:= labs
 
+include make/pre-commit/*.mk
 include make/terraform/*.mk

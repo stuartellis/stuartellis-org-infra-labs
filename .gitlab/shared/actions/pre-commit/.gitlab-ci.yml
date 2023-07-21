@@ -1,0 +1,18 @@
+.action_analyze_pre_commit:
+  image: $CI_PRE_COMMIT_IMAGE
+  before_script:
+    - apt update
+    - apt install -y git make
+    - pip install pre-commit
+  script:
+    - make pre-commit-check
+  variables:
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+  cache:
+    - key: pip
+      paths:
+        - ${PIP_CACHE_DIR}
+    - key: pre-commit
+      paths:
+        - ${PRE_COMMIT_HOME}

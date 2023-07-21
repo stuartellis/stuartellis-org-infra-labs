@@ -1,0 +1,18 @@
+---
+extends: default
+
+ignore:
+  - terraform1/stacks/definitions/*/.terraform/*
+
+rules:
+  comments:
+    ignore: |
+      *.cc.yml
+  document-start:
+    ignore: |
+      .gitlab-ci.yml
+      .pre-commit-config.yaml
+      *.cc.yml
+  line-length:
+    ignore: |
+      .gitlab-ci.yml

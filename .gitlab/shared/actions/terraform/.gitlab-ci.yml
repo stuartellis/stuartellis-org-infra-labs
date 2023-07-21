@@ -1,4 +1,3 @@
-
 .action_analyze_terraform:
   image: $CI_TF_IMAGE
   before_script:
@@ -52,4 +51,4 @@
     - echo "Tag release $ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT-$RELEASE_VERSION"
   release:
     tag_name: $ENVIRONMENT-$COMPONENT_NAME-$STACK_VARIANT-$RELEASE_VERSION
-    description: 'Release $RELEASE_VERSION for $ENVIRONMENT $COMPONENT_NAME $STACK_VARIANT'
+    description: "Release $RELEASE_VERSION for $ENVIRONMENT $COMPONENT_NAME $STACK_VARIANT"

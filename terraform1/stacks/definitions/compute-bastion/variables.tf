@@ -17,3 +17,11 @@ variable "variant" {
 variable "tf_exec_role_arn" {
   type = string
 }
+
+variable "ec2_instance_config" {
+  type = map(any)
+}
+
+variable "ec2_network_config" {
+  type = map(any)
+}
