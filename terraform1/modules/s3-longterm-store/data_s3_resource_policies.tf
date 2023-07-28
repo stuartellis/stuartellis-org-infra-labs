@@ -1,9 +1,9 @@
-data "aws_iam_policy_document" "shortterm" {
+data "aws_iam_policy_document" "longterm" {
   statement {
     sid       = "DenyUnecryptedObjectUploads"
     effect    = "Deny"
     actions   = ["s3:PutObject"]
-    resources = ["${aws_s3_bucket.shortterm.arn}/*"]
+    resources = ["${aws_s3_bucket.longterm.arn}/*"]
     principals {
       type        = "*"
       identifiers = ["*"]
@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "shortterm" {
     sid       = "DenyHttpRequests"
     effect    = "Deny"
     actions   = ["s3:*"]
-    resources = ["${aws_s3_bucket.shortterm.arn}/*"]
+    resources = ["${aws_s3_bucket.longterm.arn}/*"]
     principals {
       type        = "*"
       identifiers = ["*"]
@@ -50,8 +50,8 @@ data "aws_iam_policy_document" "shortterm" {
     ]
 
     resources = [
-      aws_s3_bucket.shortterm.arn,
-      "${aws_s3_bucket.shortterm.arn}/*"
+      aws_s3_bucket.longterm.arn,
+      "${aws_s3_bucket.longterm.arn}/*"
     ]
 
     principals {

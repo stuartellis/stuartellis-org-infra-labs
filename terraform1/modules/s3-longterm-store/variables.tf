@@ -3,7 +3,15 @@ variable "aws_account_id" {
   type = string
 }
 
-variable "s3_data_retention_days" {
+variable "s3_data_first_transition_days" {
+  type = string
+}
+
+variable "s3_data_second_transition_days" {
+  type = string
+}
+
+variable "s3_data_third_transition_days" {
   type = string
 }
 
