@@ -70,7 +70,7 @@ infra-canary-one_stop_dev:
     - .comp_infra-canary-one
     - .action_deploy_tf_review
   environment:
-    name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_VARIANT
+    name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_NAME/$STACK_VARIANT
     deployment_tier: development
     action: stop
   when: manual
