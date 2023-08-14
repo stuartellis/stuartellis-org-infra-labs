@@ -68,7 +68,7 @@ infra-canary-one_stop_dev:
     - !reference [.rules_mr_trigger_tf, rules]
   extends:
     - .comp_infra-canary-one
-    - .action_deploy_tf_review
+    - .action_stop_tf_review
   environment:
     name: $PRODUCT_NAME/$ENVIRONMENT/$STACK_NAME/$STACK_VARIANT
     deployment_tier: development
