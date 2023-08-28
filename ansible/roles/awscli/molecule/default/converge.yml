@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include sje.awscli"
+      ansible.builtin.include_role:
+        name: "sje.awscli"

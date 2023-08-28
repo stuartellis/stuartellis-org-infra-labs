@@ -1,0 +1,12 @@
+---
+- name: test
+  connection: aws_ssm
+  gather_facts: false
+  hosts: all
+  tasks:
+    - raw: uptime
+  vars:
+    ansible_aws_ssm_bucket_name: FIXME
+    ansible_aws_ssm_bucket_ssm_mode: AES256
+    ansible_aws_ssm_plugin: /opt/homebrew/bin/session-manager-plugin
+    ansible_aws_ssm_region: eu-west-2

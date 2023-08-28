@@ -1,0 +1,18 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: molecule/default/requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: molecule-ubuntu-2204
+    image: "geerlingguy/docker-ubuntu2204-ansible:latest"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

@@ -1,0 +1,12 @@
+---
+plugin: amazon.aws.aws_ec2
+
+hostnames:
+  - instance-id
+
+keyed_groups:
+  - key: tags
+    prefix: tag
+
+regions:
+  - eu-west-2

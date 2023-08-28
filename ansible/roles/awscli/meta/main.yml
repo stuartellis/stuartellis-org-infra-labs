@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Stuart Ellis
+  namespace: sje
+  description: Installs AWS CLI on Linux
+  company: Stuart Ellis
+
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    []
+
+dependencies:
+  []
