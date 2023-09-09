@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "longterm" {
   statement {
     sid    = "AllowAuthorizedRolesRW"
     effect = "Allow"
-    action = [
+    actions = [
       "s3:GetBucketLocation",
       "s3:GetObject",
       "s3:ListBucket",
