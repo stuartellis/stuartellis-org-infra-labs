@@ -21,4 +21,4 @@ include:
 
   # Components #
 
-  - local: '.gitlab/pipelines/components/**/.gitlab-ci.yml'
+  - local: '.gitlab/pipelines/components/10-infra-enablement-default/.gitlab-ci.yml'
