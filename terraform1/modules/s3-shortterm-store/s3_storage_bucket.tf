@@ -22,5 +22,5 @@ resource "aws_s3_bucket_lifecycle_configuration" "shortterm" {
 
 resource "aws_s3_bucket_policy" "shortterm" {
   bucket = aws_s3_bucket.shortterm.id
-  policy = data.aws_policy_document.shortterm.json
+  policy = data.aws_iam_policy_document.shortterm.json
 }

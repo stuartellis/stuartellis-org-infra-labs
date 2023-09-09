@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "shortterm" {
       variable = "aws:SourceAccount"
 
       values = [
-        var.var.aws_account_id
+        var.aws_account_id
       ]
     }
   }

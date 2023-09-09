@@ -33,5 +33,5 @@ resource "aws_s3_bucket_lifecycle_configuration" "longterm" {
 
 resource "aws_s3_bucket_policy" "longterm" {
   bucket = aws_s3_bucket.longterm.id
-  policy = data.aws_policy_document.longterm.json
+  policy = data.aws_iam_policy_document.longterm.json
 }

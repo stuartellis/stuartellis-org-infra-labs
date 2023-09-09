@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "longterm" {
       variable = "aws:SourceAccount"
 
       values = [
-        var.var.aws_account_id
+        var.aws_account_id
       ]
     }
   }
