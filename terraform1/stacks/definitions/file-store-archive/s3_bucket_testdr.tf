@@ -10,6 +10,6 @@ module "s3_bucket_testdr" {
   s3_data_third_transition_days  = var.s3_data_third_transition_days
 
   s3_store_rw_access_role_arns = [
-    var.var.tf_exec_role_arn
+    var.tf_exec_role_arn
   ]
 }
