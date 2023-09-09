@@ -11,7 +11,7 @@
 infra_enablement_file_store_ops_linting:
   variables:
     ENVIRONMENT: dev
-    STACK_NAME: file_store_ops
+    STACK_NAME: file-store-ops
   stage: analyze-linting
   needs: ["project_pre-commit_default"]
   rules:
@@ -23,7 +23,7 @@ infra_enablement_file_store_ops_linting:
 infra_enablement_file_store_ops_plan_dev:
   variables:
     ENVIRONMENT: dev
-    STACK_NAME: file_store_ops
+    STACK_NAME: file-store-ops
     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$ENVIRONMENT-$STACK_NAME-$STACK_VARIANT-plan.json
   artifacts:
     when: always
@@ -42,7 +42,7 @@ infra_enablement_file_store_ops_plan_dev:
 infra_enablement_file_store_ops_review_dev:
   variables:
     ENVIRONMENT: dev
-    STACK_NAME: file_store_ops
+    STACK_NAME: file-store-ops
   stage: review
   needs: ["infra_enablement_file_store_ops_plan_dev"]
   rules:
@@ -62,7 +62,7 @@ infra_enablement_file_store_ops_review_dev:
 infra_enablement_file_store_ops_stop_dev:
   variables:
     ENVIRONMENT: dev
-    STACK_NAME: file_store_ops
+    STACK_NAME: file-store-ops
   stage: review
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
@@ -78,7 +78,7 @@ infra_enablement_file_store_ops_stop_dev:
 # infra_enablement_file_store_ops_plan_test:
 #   variables:
 #     ENVIRONMENT: test
-#     STACK_NAME: file_store_ops
+#     STACK_NAME: file-store-ops
 #     TF_PLAN_JSON: tmp/terraform/$PRODUCT_NAME-$ENVIRONMENT-$STACK_NAME-$STACK_VARIANT-plan.json
 #   artifacts:
 #     when: always
@@ -97,7 +97,7 @@ infra_enablement_file_store_ops_stop_dev:
 # infra_enablement_file_store_ops_release_test:
 #   variables:
 #     ENVIRONMENT: test
-#     STACK_NAME: file_store_ops
+#     STACK_NAME: file-store-ops
 #   stage: deploy-release
 #   needs: ["infra_enablement_file_store_ops_plan_test"]
 #   rules:
@@ -116,7 +116,7 @@ infra_enablement_file_store_ops_stop_dev:
 # infra_enablement_file_store_ops_tag_test:
 #   variables:
 #     ENVIRONMENT: test
-#     STACK_NAME: file_store_ops
+#     STACK_NAME: file-store-ops
 #   stage: tag-release
 #   needs: ["infra_enablement_file_store_ops_release_test"]
 #   rules:
