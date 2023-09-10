@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "longterm" {
       "s3:AbortMultipartUpload",
       "s3:PutObject",
       "s3:DeleteObject",
-      "s3:ListMultipartUploads"
+      "s3:ListMultipartUploadParts"
     ]
 
     resources = [
