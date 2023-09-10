@@ -1,7 +1,7 @@
 data "archive_file" "image_lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../../../../python/lambdas/${var.image_function_name}"
-  output_path = "${path.module}/${var.image_function_name}.zip"
+  output_path = "${path.module}/../../../../tmp/build/${var.image_function_name}.zip"
 }
 
 resource "aws_cloudwatch_log_group" "image_lambda" {
@@ -59,6 +59,4 @@ resource "aws_lambda_function" "image_lambda" {
       TARGET_URL = "https://www.stuartellis.name"
     }
   }
-
-  depends_on = [data.archive_file.image_lambda_zip]
 }

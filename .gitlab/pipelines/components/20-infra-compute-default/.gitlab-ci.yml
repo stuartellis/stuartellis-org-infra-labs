@@ -30,6 +30,7 @@ infra_compute_compute-site-checker_plan_dev:
     name: $PRODUCT_NAME-$ENVIRONMENT-$STACK_NAME-$STACK_VARIANT-tfplan
     expire_in: 1 week
     paths:
+      - tmp/build
       - tmp/terraform
   stage: build-tf-plan
   needs: ["infra_compute_compute-site-checker_linting"]
