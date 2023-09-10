@@ -23,14 +23,5 @@ data "aws_iam_policy_document" "shortterm" {
       type        = "AWS"
       identifiers = var.s3_store_rw_access_role_arns
     }
-
-    condition {
-      test     = "StringEquals"
-      variable = "aws:SourceAccount"
-
-      values = [
-        var.aws_account_id
-      ]
-    }
   }
 }
