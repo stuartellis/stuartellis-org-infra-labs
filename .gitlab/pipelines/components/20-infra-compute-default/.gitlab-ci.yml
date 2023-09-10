@@ -16,6 +16,7 @@ infra_compute_compute-site-checker_linting:
   needs: ["project_pre-commit_default"]
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
+    - !reference [.rules_mr_trigger_lambda, rules]
   extends:
     - .comp_infra-enablement
     - .action_analyze_terraform
@@ -36,6 +37,7 @@ infra_compute_compute-site-checker_plan_dev:
   needs: ["infra_compute_compute-site-checker_linting"]
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
+    - !reference [.rules_mr_trigger_lambda, rules]
   extends:
     - .comp_infra-enablement
     - .action_plan_terraform
@@ -48,6 +50,7 @@ infra_compute_compute-site-checker_review_dev:
   needs: ["infra_compute_compute-site-checker_plan_dev"]
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
+    - !reference [.rules_mr_trigger_lambda, rules]
   dependencies:
     - infra_compute_compute-site-checker_plan_dev
   extends:
@@ -67,6 +70,7 @@ infra_compute_compute-site-checker_stop_dev:
   stage: review
   rules:
     - !reference [.rules_mr_trigger_tf, rules]
+    - !reference [.rules_mr_trigger_lambda, rules]
   extends:
     - .comp_infra-enablement
     - .action_stop_tf_review
@@ -91,6 +95,7 @@ infra_compute_compute-site-checker_stop_dev:
 #   needs: ["infra_compute_compute-site-checker_linting"]
 #   rules:
 #     - !reference [.rules_main_trigger_tf, rules]
+#     - !reference [.rules_main_trigger_lambda, rules]
 #   extends:
 #     - .comp_infra-enablement
 #     - .action_plan_terraform
@@ -103,6 +108,7 @@ infra_compute_compute-site-checker_stop_dev:
 #   needs: ["infra_compute_compute-site-checker_plan_test"]
 #   rules:
 #     - !reference [.rules_main_trigger_tf, rules]
+#     - !reference [.rules_main_trigger_lambda, rules]
 #   dependencies:
 #     - infra_compute_compute-site-checker_plan_test
 #   extends:
@@ -122,6 +128,7 @@ infra_compute_compute-site-checker_stop_dev:
 #   needs: ["infra_compute_compute-site-checker_release_test"]
 #   rules:
 #     - !reference [.rules_main_trigger_tf, rules]
+#     - !reference [.rules_main_trigger_lambda, rules]
 #   extends:
 #     - .comp_infra-enablement
 #     - .action_tag_release
