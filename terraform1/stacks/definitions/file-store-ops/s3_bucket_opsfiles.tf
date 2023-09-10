@@ -8,6 +8,6 @@ module "s3_bucket_opsfiles" {
   s3_data_retention_days = var.s3_data_retention_days
 
   s3_store_rw_access_role_arns = [
-    var.tf_exec_role_arn
+    var.tf_exec_role_arn,
   ]
 }
