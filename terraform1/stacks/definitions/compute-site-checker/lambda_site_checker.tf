@@ -1,6 +1,6 @@
 data "archive_file" "image_lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../../../python/lambdas/${var.image_function_name}"
+  source_dir  = "${path.module}/../../../../python/lambdas/${var.image_function_name}"
   output_path = "${path.module}/${var.image_function_name}.zip"
 }
 
