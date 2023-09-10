@@ -5,7 +5,7 @@ data "archive_file" "image_lambda_zip" {
 }
 
 resource "aws_cloudwatch_log_group" "image_lambda" {
-  name              = "/aws/lambda/${var.image_function_name}"
+  name              = "/aws/lambda/${local.lambda_prefix}-${var.image_function_name}"
   retention_in_days = var.log_retention_days
 }
 
