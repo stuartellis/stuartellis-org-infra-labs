@@ -59,4 +59,6 @@ resource "aws_lambda_function" "image_lambda" {
       TARGET_URL = "https://www.stuartellis.name"
     }
   }
+
+  depends_on = [data.archive_file.image_lambda_zip]
 }
