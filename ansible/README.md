@@ -25,3 +25,9 @@ Ensure that you set AWS credentials for your shell session. Then use the *-i* op
 ## Ansible Builder
 
 [Ansible Builder](https://ansible-builder.readthedocs.io/en/latest/) creates Execution Environments.
+
+## Ansible Runner
+
+```shell
+ansible-runner run -p self_test.yml --project-dir ./data/project ./data
+```
