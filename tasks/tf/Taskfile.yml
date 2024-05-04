@@ -11,10 +11,13 @@
 # AWS_PROFILE
 # ENV
 # STACK
+# PRODUCT_NAME
 # GITLAB_PROJECT_ID
-# GITLAB_USERNAME
-# GITLAB_ACCESS_TOKEN
-#
+# TF_HTTP_LOCK_METHOD
+# TF_HTTP_UNLOCK_METHOD
+# TF_HTTP_USERNAME
+# TF_HTTP_PASSWORD
+# TF_HTTP_RETRY_WAIT_MIN
 
 version: "3"
 
@@ -48,33 +51,47 @@ tasks:
     deps: [plan]
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} apply {{.TF_CLI_PLAN_PATH}}"
+    requires:
+      vars: [ENV, STACK]
 
   check:
     desc: Check stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt -check -diff -recursive"
+    requires:
+      vars: [STACK]
 
   destroy:
     desc: Destroy stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} apply -destroy -auto-approve {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+    requires:
+      vars: [ENV, STACK]
 
   fmt:
     desc: Format code for stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt"
+    requires:
+      vars: [STACK]
 
   init:
     desc: Init stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} init {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+    requires:
+      vars: [ENV, STACK]
 
   plan:
     desc: Create TF plan for stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} plan {{.TF_CLI_PLAN_OPT}} {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+    requires:
+      vars: [ENV, STACK]
 
   validate:
     desc: Validate stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} validate"
+    requires:
+      vars: [STACK]

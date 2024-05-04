@@ -12,4 +12,14 @@ terraform = "1.8.2"
 trivy = "latest"
 
 [env]
-_.file = ["{{env.HOME}}/.gitlab-creds", "{{env.ENV}}.env"]
+_.file = ["{{env.HOME}}/.gitlab/creds"]
+
+PRODUCT_NAME = 'labs'
+
+GITLAB_PROJECT_ID = '44821683'
+
+TF_HTTP_LOCK_METHOD = 'POST'
+TF_HTTP_UNLOCK_METHOD = 'DELETE'
+TF_HTTP_USERNAME = "{{env.GITLAB_USERNAME}}"
+TF_HTTP_PASSWORD = "${{env.GITLAB_ACCESS_TOKEN}}"
+TF_HTTP_RETRY_WAIT_MIN = '5'

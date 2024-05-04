@@ -37,6 +37,7 @@
         ".devcontainer/devcontainer.env"
     ],
     "mounts": [
-        "source=${env:HOME}/.aws,target=/home/vscode/.aws,type=bind"
+        "source=${env:HOME}/.aws,target=/home/vscode/.aws,type=bind",
+        "source=${env:HOME}/.gitlab,target=/home/vscode/.gitlab,type=bind"
     ]
 }
