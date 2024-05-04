@@ -5,15 +5,76 @@
 # TF tasks for the Task runner:
 #
 # https://taskfile.dev
+#
+# Requires these environment variables:
+#
+# AWS_PROFILE
+# ENV
+# STACK
+# GITLAB_PROJECT_ID
+# GITLAB_USERNAME
+# GITLAB_ACCESS_TOKEN
+#
 
 version: "3"
 
-silent: true
+vars:
+  TF_CLI_EXE: terraform
+
+  TF_CLI_STATE_NAME: "{{.PRODUCT_NAME}}-{{.STACK}}-{{.ENV}}"
+
+  TF_CLI_HTTP_BACKEND_ADDRESS: "https://gitlab.com/api/v4/projects/{{.GITLAB_PROJECT_ID}}/terraform/state/{{.TF_CLI_STATE_NAME}}"
+
+  TF_CLI_PLAN_DIR: "{{.ROOT_DIR}}/tmp/tf"
+  TF_CLI_ENVS_DIR: "{{.ROOT_DIR}}/tf/environments"
+  TF_CLI_WORKING_DIR: "tf/definitions/{{.STACK}}"
+  TF_CLI_CHDIR_OPT: "-chdir={{.TF_CLI_WORKING_DIR}}"
+
+  TF_CLI_PLAN_PATH: "{{.TF_CLI_PLAN_DIR}}/{{.TF_CLI_STATE_NAME}}.tfplan"
+  TF_CLI_PLAN_OPT: "-out={{.TF_CLI_PLAN_PATH}}"
+  TF_CLI_VARS_OPT: "-var='product_name={{.PRODUCT_NAME}}' -var='stack_name={{.STACK}}' -var='environment_name={{.ENV}}'"
+  TF_CLI_VAR_FILES_OPT: "-var-file={{.TF_CLI_ENVS_DIR}}/all/{{.STACK}}.tfvars -var-file={{.TF_CLI_ENVS_DIR}}/{{.ENV}}/{{.STACK}}.tfvars"
+
+env:
+  TF_HTTP_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}"
+  TF_HTTP_LOCK_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}/lock"
+  TF_HTTP_UNLOCK_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}/lock"
+  CHECKPOINT_DISABLE: true
+  TF_INPUT: 0
 
 tasks:
-
-  clean:
-    desc: Delete generated files
+  apply:
+    desc: Apply stack
+    deps: [plan]
     cmds:
-      - for: [".terraform"]
-        cmd: rm -fr {{.ITEM}}
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} apply {{.TF_CLI_PLAN_PATH}}"
+
+  check:
+    desc: Check stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt -check -diff -recursive"
+
+  destroy:
+    desc: Destroy stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} apply -destroy -auto-approve {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+
+  fmt:
+    desc: Format code for stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt"
+
+  init:
+    desc: Init stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} init {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+
+  plan:
+    desc: Create TF plan for stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} plan {{.TF_CLI_PLAN_OPT}} {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
+
+  validate:
+    desc: Validate stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} validate"

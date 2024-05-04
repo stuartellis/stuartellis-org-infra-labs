@@ -10,9 +10,12 @@ version: "3"
 
 silent: true
 
+dotenv: ["{{.ENV}}.env"]
+
 includes:
   pre-commit: tasks/pre-commit
   project: tasks/project
+  tf: tasks/tf
 
 tasks:
   default:
