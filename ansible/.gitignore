@@ -1,7 +1,0 @@
-# Generated files
-.cache
-.venv
-collections
-context
-tmp
-*.retry

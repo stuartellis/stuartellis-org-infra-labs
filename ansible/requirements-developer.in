@@ -1,8 +1,0 @@
-ansible-core==2.15.3
-ansible-builder==3.0.0
-ansible-lint==6.17.3
-boto3==1.28.26
-molecule==6.0.0
-molecule_plugins==23.5.0
-pip-tools==7.3.0
-pre-commit==3.3.3
