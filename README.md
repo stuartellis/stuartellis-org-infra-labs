@@ -17,7 +17,7 @@ This project builds and deploys infrastructure experiments.
 - [Install](#install)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
+- [Licenses](#licenses)
 
 ## Install
 
