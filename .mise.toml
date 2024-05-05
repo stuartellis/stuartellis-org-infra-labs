@@ -26,4 +26,6 @@ TF_HTTP_USERNAME = "{{env.GITLAB_USERNAME}}"
 TF_HTTP_PASSWORD = "${{env.GITLAB_ACCESS_TOKEN}}"
 TF_HTTP_RETRY_WAIT_MIN = '5'
 
+# Options to support non-interactive use
 TF_INPUT = '0'
+TF_IN_AUTOMATION = 'true'
