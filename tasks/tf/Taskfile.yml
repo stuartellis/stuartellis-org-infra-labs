@@ -25,7 +25,7 @@ version: "3"
 vars:
   TF_CLI_EXE: terraform
 
-  TF_CLI_STATE_NAME: "{{.PRODUCT_NAME}}-{{.STACK}}-{{.ENV}}"
+  TF_CLI_STATE_NAME: "{{.PRODUCT_NAME}}-{{.STACK}}-{{.ENV}}-{{.VARIANT}}"
 
   TF_CLI_HTTP_BACKEND_ADDRESS: "https://gitlab.com/api/v4/projects/{{.GITLAB_PROJECT_ID}}/terraform/state/{{.TF_CLI_STATE_NAME}}"
 
