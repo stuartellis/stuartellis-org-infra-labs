@@ -109,10 +109,12 @@ tasks:
       vars: [STACK]
 
   shell:
-   desc: TF console
-   interactive: true
-   cmds:
-     - terraform {{.TF_CLI_CHDIR_OPT}} console {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}
+    desc: TF console for stack
+    interactive: true
+    cmds:
+      - terraform {{.TF_CLI_CHDIR_OPT}} console {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}
+    requires:
+      vars: [ENV, STACK]
 
   validate:
     desc: Validate stack
