@@ -31,13 +31,17 @@ vars:
 
   TF_CLI_PLAN_DIR: "{{.ROOT_DIR}}/tmp/tf"
   TF_CLI_ENVS_DIR: "{{.ROOT_DIR}}/tf/environments"
-  TF_CLI_WORKING_DIR: "tf/definitions/{{.STACK}}"
+  TF_CLI_TEMPLATES_DIR: "tf/templates"
+  TF_CLI_STACKS_DIR: "tf/definitions"
+  TF_CLI_WORKING_DIR: "{{.TF_CLI_STACKS_DIR}}/{{.STACK}}"
   TF_CLI_CHDIR_OPT: "-chdir={{.TF_CLI_WORKING_DIR}}"
 
   TF_CLI_PLAN_PATH: "{{.TF_CLI_PLAN_DIR}}/{{.TF_CLI_STATE_NAME}}.tfplan"
   TF_CLI_PLAN_OPT: "-out={{.TF_CLI_PLAN_PATH}}"
   TF_CLI_VARS_OPT: "-var='product_name={{.PRODUCT_NAME}}' -var='stack_name={{.STACK}}' -var='environment_name={{.ENV}}' -var='variant={{.VARIANT}}'"
   TF_CLI_VAR_FILES_OPT: "-var-file={{.TF_CLI_ENVS_DIR}}/all/{{.STACK}}.tfvars -var-file={{.TF_CLI_ENVS_DIR}}/{{.ENV}}/{{.STACK}}.tfvars"
+
+  STACK_ENVS: all,dev,prod,staging,test
 
 env:
   TF_HTTP_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}"
@@ -81,6 +85,14 @@ tasks:
     requires:
       vars: [ENV, STACK]
 
+  new:
+    desc: Create new stack
+    cmds:
+      - cp -r "{{.TF_CLI_TEMPLATES_DIR}}/stack" "{{.TF_CLI_STACKS_DIR}}/{{.STACK}}"
+      - task: new-stack-envs
+    requires:
+      vars: [STACK]
+
   plan:
     desc: Create TF plan for stack
     cmds:
@@ -88,9 +100,33 @@ tasks:
     requires:
       vars: [ENV, STACK]
 
+  rm:
+    desc: Remove code for stack
+    cmds:
+      - rm -fr "{{.TF_CLI_STACKS_DIR}}/{{.STACK}}"
+      - task: rm-stack-envs
+    requires:
+      vars: [STACK]
+
   validate:
     desc: Validate stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} validate"
     requires:
       vars: [STACK]
+
+  ## Internal tasks ##
+
+  new-stack-envs:
+    desc: Add environments for stack
+    internal: true
+    cmds:
+      - for: { var: STACK_ENVS, split: "," }
+        cmd: cp "{{.TF_CLI_TEMPLATES_DIR}}/environments/{{.ITEM}}.tfvars" "{{.TF_CLI_ENVS_DIR}}/{{.ITEM}}/{{.STACK}}.tfvars"
+
+  rm-stack-envs:
+    desc: Remove environments for stack
+    internal: true
+    cmds:
+      - for: { var: STACK_ENVS, split: "," }
+        cmd: rm "{{.TF_CLI_ENVS_DIR}}/{{.ITEM}}/{{.STACK}}.tfvars"
