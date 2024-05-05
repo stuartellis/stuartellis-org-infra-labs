@@ -2,10 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-variable "domain_name" {
-  type = string
-}
-
-variable "site_name" {
+variable "tf_exec_role_arn" {
   type = string
 }

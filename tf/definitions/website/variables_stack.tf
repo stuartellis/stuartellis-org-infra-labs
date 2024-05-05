@@ -2,10 +2,18 @@
 #
 # SPDX-License-Identifier: MIT
 
-variable "domain_name" {
+variable "environment_name" {
   type = string
 }
 
-variable "site_name" {
+variable "product_name" {
+  type = string
+}
+
+variable "stack_name" {
+  type = string
+}
+
+variable "variant" {
   type = string
 }
