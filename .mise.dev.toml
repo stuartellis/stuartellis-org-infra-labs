@@ -6,3 +6,4 @@
 [env]
 AWS_PROFILE = 'origin-human'
 ENV = 'dev'
+VARIANT = 'default'

@@ -11,6 +11,7 @@
 # AWS_PROFILE
 # ENV
 # STACK
+# VARIANT
 # PRODUCT_NAME
 # GITLAB_PROJECT_ID
 # TF_HTTP_LOCK_METHOD
@@ -35,7 +36,7 @@ vars:
 
   TF_CLI_PLAN_PATH: "{{.TF_CLI_PLAN_DIR}}/{{.TF_CLI_STATE_NAME}}.tfplan"
   TF_CLI_PLAN_OPT: "-out={{.TF_CLI_PLAN_PATH}}"
-  TF_CLI_VARS_OPT: "-var='product_name={{.PRODUCT_NAME}}' -var='stack_name={{.STACK}}' -var='environment_name={{.ENV}}'"
+  TF_CLI_VARS_OPT: "-var='product_name={{.PRODUCT_NAME}}' -var='stack_name={{.STACK}}' -var='environment_name={{.ENV}}' -var='variant={{.VARIANT}}'"
   TF_CLI_VAR_FILES_OPT: "-var-file={{.TF_CLI_ENVS_DIR}}/all/{{.STACK}}.tfvars -var-file={{.TF_CLI_ENVS_DIR}}/{{.ENV}}/{{.STACK}}.tfvars"
 
 env:
