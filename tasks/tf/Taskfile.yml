@@ -42,8 +42,6 @@ env:
   TF_HTTP_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}"
   TF_HTTP_LOCK_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}/lock"
   TF_HTTP_UNLOCK_ADDRESS: "{{.TF_CLI_HTTP_BACKEND_ADDRESS}}/lock"
-  CHECKPOINT_DISABLE: true
-  TF_INPUT: 0
 
 tasks:
   apply:
@@ -95,3 +93,7 @@ tasks:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} validate"
     requires:
       vars: [STACK]
+
+  info:
+    desc: info
+    cmd:
