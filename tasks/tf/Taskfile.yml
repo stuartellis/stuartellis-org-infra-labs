@@ -93,7 +93,3 @@ tasks:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} validate"
     requires:
       vars: [STACK]
-
-  info:
-    desc: info
-    cmd:
