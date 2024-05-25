@@ -13,7 +13,7 @@ silent: true
 includes:
   pre-commit: tasks/pre-commit
   project: tasks/project
-  stack: tasks/tf
+  stack: tasks/tf-stacks
 
 tasks:
   default:
