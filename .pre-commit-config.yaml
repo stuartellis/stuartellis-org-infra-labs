@@ -14,7 +14,6 @@ repos:
       - id: end-of-file-fixer
       - id: check-json
       - id: check-toml
-      - id: check-yaml
       - id: check-added-large-files
   - repo: https://github.com/fsfe/reuse-tool
     rev: v3.0.2
@@ -28,6 +27,11 @@ repos:
     rev: 0.28.2
     hooks:
       - id: check-taskfile
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [--strict]
   - repo: local
     hooks:
       - id: trivy-config
