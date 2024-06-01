@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
+#
+# SPDX-License-Identifier: MIT
+#
+# Configuration for GitLab pipelines:
+#
+# See: https://docs.gitlab.com/ee/ci/pipelines/
+
+stages:
+  - validate
+#  - plan
+#  - apply-review
+#  - apply-release
+
+variables:
+  ENV: test
+  STACK: compute-coracle
+
+default:
+  image: alpine:3.20.0
+
+before_script:
+  - apk add mise
+  - mise install
+
+validate:
+  stage: validate
+  script:
+    - task stack:init
+    - task stack:validate
