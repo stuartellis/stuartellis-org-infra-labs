@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: MIT
 #
 
 [tools]
@@ -12,5 +12,10 @@ trivy = "latest"
 
 [env]
 PRODUCT_NAME = 'labs'
-GITLAB_PROJECT_ID = '44821683'
 VARIANT = 'default'
+
+# TF: Disable use of Hashicorp Checkpoint service
+CHECKPOINT_DISABLE = 'true'
+
+# GitLab: Specify ID of project
+GITLAB_PROJECT_ID = '44821683'

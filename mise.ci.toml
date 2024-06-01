@@ -1,21 +1,16 @@
 # SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: MIT
 #
 
 [env]
-PRODUCT_NAME = 'labs'
-
-CHECKPOINT_DISABLE = 'true'
-
-GITLAB_PROJECT_ID = '44821683'
-
+# TF: Use GitLab HTTP backend for TF state
 TF_HTTP_LOCK_METHOD = 'POST'
 TF_HTTP_UNLOCK_METHOD = 'DELETE'
 TF_HTTP_USERNAME = "gitlab-ci-token"
 TF_HTTP_PASSWORD = "{{env.CI_JOB_TOKEN}}"
 TF_HTTP_RETRY_WAIT_MIN = '5'
 
-# Options to support non-interactive use
+# TF: Options to support non-interactive use
 TF_INPUT = '0'
 TF_IN_AUTOMATION = 'true'
