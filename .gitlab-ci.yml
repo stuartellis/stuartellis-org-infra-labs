@@ -21,8 +21,9 @@ default:
   image: alpine:3.20.0
 
 before_script:
+  - apk update
   - apk add bash git mise
-  - mise install
+  - mise install terraform
 
 validate:
   stage: validate
