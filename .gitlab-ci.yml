@@ -2,20 +2,21 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Configuration for GitLab pipelines:
+# Configuration for GitLab pipelines
 #
 # See: https://docs.gitlab.com/ee/ci/pipelines/
 
 stages:
   - validate
-#  - plan
-#  - apply-review
-#  - apply-release
+  - plan
+#  - apply_review
+#  - apply_release
 
 variables:
-  ENV: test
   MISE_ENV: ci
+  MISE_PARANOID: 1
   STACK: compute-coracle
+  VARIANT: default
 
 default:
   image: alpine:3.20.0
@@ -32,3 +33,14 @@ validate:
     - mise install --quiet terraform
     - mise exec task --command "task stack:init"
     - mise exec task --command "task stack:validate"
+  variables:
+    ENV: validate
+
+plan_test:
+  stage: plan
+  script:
+    - mise install --quiet terraform
+    - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:plan"
+  variables:
+    ENV: test
