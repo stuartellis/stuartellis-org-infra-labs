@@ -25,6 +25,7 @@ before_script:
   - apk update
   - apk upgrade --no-cache --no-interactive
   - apk add --no-cache --no-interactive bash curl git gnupg mise
+  - mise trust .mise.toml
   - mise trust .mise.ci.toml
   - mise install --quiet task
 
