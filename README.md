@@ -4,7 +4,7 @@ SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
 SPDX-License-Identifier: CC-BY-NC-SA-4.0
 -->
 
-# Personal Website for Stuart Ellis
+# Infrastructure Experiments
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
