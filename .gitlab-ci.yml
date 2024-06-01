@@ -14,6 +14,7 @@ stages:
 
 variables:
   ENV: test
+  MISE_ENV: ci
   STACK: compute-coracle
 
 default:
