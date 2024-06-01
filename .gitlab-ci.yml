@@ -20,7 +20,7 @@ default:
   image: alpine:3.20.0
 
 before_script:
-  - apk add git mise
+  - apk add bash git mise
   - mise install
 
 validate:
