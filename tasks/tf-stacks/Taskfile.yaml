@@ -95,6 +95,7 @@ tasks:
 
   plan:
     desc: Create TF plan for stack
+    deps: [ensure-temp-dir]
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} plan {{.TF_CLI_PLAN_OPT}} {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
     requires:
@@ -138,3 +139,9 @@ tasks:
     cmds:
       - for: { var: STACK_ENVS, split: "," }
         cmd: rm "{{.TF_CLI_ENVS_DIR}}/{{.ITEM}}/{{.STACK}}.tfvars"
+
+  ensure-temp-dir:
+    desc: Ensure that temporary directory exists
+    internal: true
+    cmds:
+      - mkdir -p "{{.TF_CLI_PLAN_DIR}}"
