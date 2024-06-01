@@ -25,6 +25,7 @@ before_script:
   - apk update
   - apk upgrade --no-cache --no-interactive
   - apk add --no-cache --no-interactive bash curl git gnupg mise
+  - mise trust .mise.ci.toml
   - mise install --quiet task
 
 validate:
@@ -36,11 +37,11 @@ validate:
   variables:
     ENV: validate
 
-plan_test:
+plan_dev:
   stage: plan
   script:
     - mise install --quiet terraform
     - mise exec task --command "task stack:init"
     - mise exec task --command "task stack:plan"
   variables:
-    ENV: test
+    ENV: dev
