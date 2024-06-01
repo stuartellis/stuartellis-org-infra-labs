@@ -2,9 +2,14 @@
 #
 # SPDX-License-Identifier: MIT
 #
+# Configuration for mise-en-place
+#
+# See: https://mise.jdx.dev
 
 [env]
+# Project: context for developer use
 ENV = 'dev'
+VARIANT = 'default'
 
 # AWS CLI
 AWS_PROFILE = 'origin-human'
