@@ -22,7 +22,7 @@ default:
 
 before_script:
   - apk update
-  - apk add bash git mise
+  - apk add bash curl git mise
   - mise install terraform
 
 validate:
