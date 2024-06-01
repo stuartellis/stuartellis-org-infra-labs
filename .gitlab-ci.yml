@@ -24,11 +24,11 @@ before_script:
   - apk update
   - apk upgrade --no-cache --no-interactive
   - apk add --no-cache --no-interactive bash curl git gnupg mise
-  - mise install task
-  - mise install terraform
+  - mise install --quiet task
 
 validate:
   stage: validate
   script:
-    - task stack:init
-    - task stack:validate
+    - mise install --quiet terraform
+    - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:validate"
