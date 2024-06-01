@@ -9,8 +9,6 @@
 stages:
   - validate
   - plan
-#  - apply_review
-#  - apply_release
 
 variables:
   MISE_ENV: ci
@@ -25,8 +23,8 @@ before_script:
   - apk update
   - apk upgrade --no-cache --no-interactive
   - apk add --no-cache --no-interactive bash curl git gnupg mise
-  - mise trust .mise.toml
-  - mise trust .mise.ci.toml
+  - mise trust --quiet .mise.toml
+  - mise trust --quiet .mise.ci.toml
   - mise install --quiet task
 
 validate:
@@ -46,3 +44,30 @@ plan_dev:
     - mise exec task --command "task stack:plan"
   variables:
     ENV: dev
+
+plan_test:
+  stage: plan
+  script:
+    - mise install --quiet terraform
+    - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:plan"
+  variables:
+    ENV: test
+
+plan_staging:
+  stage: plan
+  script:
+    - mise install --quiet terraform
+    - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:plan"
+  variables:
+    ENV: staging
+
+plan_prod:
+  stage: plan
+  script:
+    - mise install --quiet terraform
+    - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:plan"
+  variables:
+    ENV: prod
