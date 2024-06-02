@@ -34,6 +34,7 @@ validate:
   script:
     - mise install --quiet terraform
     - mise exec task --command "task stack:init"
+    - mise exec task --command "task stack:check-fmt"
     - mise exec task --command "task stack:validate"
   variables:
     ENV: validate
