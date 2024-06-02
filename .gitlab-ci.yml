@@ -9,6 +9,7 @@
 stages:
   - validate
   - plan
+  - review
 
 variables:
   MISE_ENV: ci
@@ -44,30 +45,43 @@ plan_dev:
     - mise exec task --command "task stack:plan"
   variables:
     ENV: dev
+  artifacts:
+    when: always
+    name: $PRODUCT_NAME-$ENV-$STACK-$VARIANT-tfplan
+    expire_in: 1 week
+    paths:
+      - tmp/tf
 
-plan_test:
-  stage: plan
+start_review:
+  stage: review
+  needs: ["plan_dev"]
+  variables:
+    ENV: dev
   script:
     - mise install --quiet terraform
     - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:plan"
-  variables:
-    ENV: test
+    - mise exec task --command "task stack:apply"
+  dependencies:
+    - plan_dev
+  resource_group: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
+  environment:
+    name: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
+    deployment_tier: development
+    on_stop: stop_review
+    # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
 
-plan_staging:
-  stage: plan
+stop_review:
+  variables:
+    ENV: dev
+  stage: review
   script:
     - mise install --quiet terraform
     - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:plan"
-  variables:
-    ENV: staging
-
-plan_prod:
-  stage: plan
-  script:
-    - mise install --quiet terraform
-    - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:plan"
-  variables:
-    ENV: prod
+    - mise exec task --command "task stack:destroy"
+  dependencies:
+    - plan_dev
+  environment:
+    name: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
+    deployment_tier: development
+    action: stop
+  when: manual
