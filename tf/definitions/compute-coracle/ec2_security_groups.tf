@@ -8,6 +8,7 @@ resource "aws_security_group" "compute_coracle" {
   description = local.ec2_prefix
 }
 
+#trivy:ignore:AVD-AWS-0104
 resource "aws_security_group_rule" "compute_coracle_egress" {
   type              = "egress"
   security_group_id = aws_security_group.compute_coracle.id

@@ -7,83 +7,27 @@
 # See: https://docs.gitlab.com/ee/ci/pipelines/
 
 stages:
-  - validate
-  - plan
-  - review
+  - pre_commit
 
 variables:
-  MISE_ENV: ci
-  MISE_PARANOID: 1
   PRODUCT_NAME: labs
   STACK: compute-coracle
   VARIANT: default
+  CI_PYTHON_IMAGE: python:3.12.4-bookworm
+  TRIVY_NO_PROGRESS: "true"
+  TRIVY_CACHE_DIR: ".trivycache/"
 
 default:
-  image: alpine:3.20.0
+  image: alpine:3.20.1
 
-before_script:
-  - apk update
-  - apk upgrade --no-cache --no-interactive
-  - apk add --no-cache --no-interactive bash curl git gnupg mise
-  - mise trust --quiet .mise.toml
-  - mise trust --quiet .mise.ci.toml
-  - mise install --quiet task
-
-validate:
-  stage: validate
+pre_commit:
+  stage: pre_commit
+  image: $CI_PYTHON_IMAGE
   script:
-    - mise install --quiet terraform
-    - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:check-fmt"
-    - mise exec task --command "task stack:validate"
+    python3 -m pip install pre-commit
+    pre-commit
   variables:
-    ENV: validate
-
-plan_dev:
-  stage: plan
-  script:
-    - mise install --quiet terraform
-    - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:plan"
-  variables:
-    ENV: dev
-  artifacts:
-    when: always
-    name: $PRODUCT_NAME-$ENV-$STACK-$VARIANT-tfplan
-    expire_in: 1 week
+    ENV: pre_commit
+  cache:
     paths:
-      - tmp/tf
-
-start_review:
-  stage: review
-  needs: ["plan_dev"]
-  variables:
-    ENV: dev
-  script:
-    - mise install --quiet terraform
-    - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:apply"
-  dependencies:
-    - plan_dev
-  resource_group: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
-  environment:
-    name: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
-    deployment_tier: development
-    on_stop: stop_review
-    # url: https://$CI_ENVIRONMENT_SLUG.action_example.action_com
-
-stop_review:
-  variables:
-    ENV: dev
-  stage: review
-  script:
-    - mise install --quiet terraform
-    - mise exec task --command "task stack:init"
-    - mise exec task --command "task stack:destroy"
-  dependencies:
-    - plan_dev
-  environment:
-    name: $PRODUCT_NAME/$ENV/$STACK/$VARIANT
-    deployment_tier: development
-    action: stop
-  when: manual
+      - .trivycache/
