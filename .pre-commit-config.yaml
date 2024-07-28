@@ -39,33 +39,11 @@ repos:
         name: trivy config
         entry: trivy
         language: system
-        args:
-          [
-            config,
-            --skip-dirs,
-            "./.cache/",
-            --skip-dirs,
-            "./tmp/",
-            --skip-files,
-            "./.devcontainer/*.dockerfile",
-            --exit-code,
-            "1",
-            .,
-          ]
+        args: [config, --exit-code, "1", .]
         pass_filenames: false
       - id: trivy-fs
         name: trivy fs
         entry: trivy
         language: system
-        args:
-          [
-            fs,
-            --skip-dirs,
-            "./.cache/",
-            --skip-dirs,
-            "./tmp/",
-            --exit-code,
-            "1",
-            .,
-          ]
+        args: [fs, --exit-code, "1", .]
         pass_filenames: false

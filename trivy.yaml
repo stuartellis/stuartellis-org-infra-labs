@@ -5,3 +5,10 @@
 # Configuration for Trivy scanner
 #
 # See https://aquasecurity.github.io/trivy
+
+scan:
+  skip-dirs:
+    - "./.cache/"
+    - "./tmp/"
+  skip-files:
+    - "./.devcontainer/*.dockerfile"
