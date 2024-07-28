@@ -42,10 +42,12 @@ repos:
         args:
           [
             config,
-            --cache-dir,
-            tmp/trivy,
-            --ignorefile,
-            ./.trivyignore.yaml,
+            --skip-dirs,
+            "./.cache/",
+            --skip-dirs,
+            "./.devcontainer/",
+            --skip-dirs,
+            "./tmp/",
             --exit-code,
             "1",
             .,
@@ -58,10 +60,12 @@ repos:
         args:
           [
             fs,
-            --cache-dir,
-            tmp/trivy,
-            --ignorefile,
-            ./.trivyignore.yaml,
+            --skip-dirs,
+            "./.cache/",
+            --skip-dirs,
+            "./.devcontainer/",
+            --skip-dirs,
+            "./tmp/",
             --exit-code,
             "1",
             .,

@@ -5,5 +5,3 @@
 # Configuration for Trivy scanner
 #
 # See https://aquasecurity.github.io/trivy
-
-ignorefile: .trivyignore.yaml
