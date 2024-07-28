@@ -24,8 +24,9 @@ pre_commit:
   stage: pre_commit
   image: $CI_PYTHON_IMAGE
   script:
+    python3 -m pip install --upgrade pip
     python3 -m pip install pre-commit
-    pre-commit
+    pre-commit run
   variables:
     ENV: pre_commit
   cache:
