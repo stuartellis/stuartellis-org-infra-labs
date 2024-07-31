@@ -6,9 +6,9 @@
 #
 # See https://aquasecurity.github.io/trivy
 
+ignorefile: .trivyignore.yaml
+
 scan:
   skip-dirs:
     - "./.cache/"
     - "./tmp/"
-  skip-files:
-    - "./.devcontainer/*.dockerfile"
