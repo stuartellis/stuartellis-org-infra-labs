@@ -31,13 +31,24 @@ pre_commit:
     - echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" > /etc/apt/sources.list.d/trivy.list
     - apt-get update
     - apt-get install -qy trivy
-
   script:
     - python3 -m pip install --upgrade pip
     - python3 -m pip install pre-commit
     - pre-commit run
   variables:
     ENV: pre_commit
+    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+    PIP_ROOT_USER_ACTION: ignore
+    PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+    TRIVY_NO_PROGRESS: "true"
+    TRIVY_CACHE_DIR: ".trivycache/"
   cache:
-    paths:
-      - $HOME/.cache/trivy
+    - key: pip
+      paths:
+        - ${PIP_CACHE_DIR}
+    - key: pre-commit
+      paths:
+        - ${PRE_COMMIT_HOME}
+    - key: trivy
+      paths:
+        - ${TRIVY_CACHE_DIR}
