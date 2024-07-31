@@ -13,7 +13,7 @@ variables:
   PRODUCT_NAME: labs
   STACK: compute-coracle
   VARIANT: default
-  CI_PYTHON_IMAGE: python:3.12.4-bookworm
+  CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
   TRIVY_NO_PROGRESS: "true"
   TRIVY_CACHE_DIR: ".trivycache/"
 
