@@ -25,7 +25,7 @@ pre_commit:
   image: $CI_PYTHON_IMAGE
   before_script:
     - apt update -qy
-    - apt install git
+    - apt install -qy git
   script:
     - python3 -m pip install --upgrade pip
     - python3 -m pip install pre-commit
