@@ -4,7 +4,7 @@
 
 module "coracle_autoscaling_group" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "6.10.0"
+  version = "7.7.0"
 
   name = "${local.ec2_prefix}-asg"
 
