@@ -6,8 +6,8 @@
 #
 
 stages:
-  - analyze-secrets
-  - pre-commit
+  - secret_detection
+  - pre_commit
 
 variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
@@ -18,10 +18,10 @@ default:
 include:
   - component: gitlab.com/components/secret-detection/secret-detection@1.1.2
     inputs:
-      stage: analyze-secrets
+      stage: secret_detection
 
-pre_commit:
-  stage: pre-commit
+analyze_pre_commit:
+  stage: pre_commit
   image: $CI_PYTHON_IMAGE
   before_script:
     - apt update -qy
