@@ -8,7 +8,7 @@
 
 .stack_base:
   before_script:
-    - ./scripts/install-task.sh -b $HOME/.local/bin $(grep '.tool-versions | cut -d ' ' -f 2)
+    - ./scripts/install-task.sh -b $HOME/.local/bin $(grep '.tool-versions' | cut -d ' ' -f 2)
     - task ci:install-terraform
 
 .stack_apply:
