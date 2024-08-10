@@ -120,7 +120,7 @@ tasks:
   test:
     desc: Test stack
     cmds:
-      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} test"
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} test {{.TF_CLI_VARS_OPT}} {{.TF_CLI_VAR_FILES_OPT}}"
     requires:
       vars: [ENV, STACK]
 
