@@ -18,5 +18,5 @@ rules:
     max-spaces-inside-empty: -1
   document-start: disable
   line-length:
-    max: 150
+    max: 200
     level: error

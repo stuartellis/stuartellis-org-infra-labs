@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
+#
+# SPDX-License-Identifier: MIT
+#
+# Configuration for GitLab Pipelines
+#
+# See: https://docs.gitlab.com/ee/ci/pipelines/
+
+.tf_base:
+  before_script:
+    - apk add go-task
+  variables:
+    ENV: $STACK_ENV
+    STACK: $STACK_NAME
+    VARIANT: $STACK_VARIANT
+
+.tf_apply:
+  script:
+    - go-task stack:apply
+
+.tf_check:
+  script:
+    - go-task stack:check-fmt
+    - go-task stack:validate
+
+.tf_destroy:
+  script:
+    - go-task stack:destroy
+
+.tf_plan:
+  script:
+    - go-task stack:plan
+
+.tf_test:
+  script:
+    - go-task stack:test

@@ -1,16 +1,21 @@
 # SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: MIT
 #
 # Configuration for GitLab Pipelines
 #
+# See: https://docs.gitlab.com/ee/ci/pipelines/
 
 stages:
   - secret_detection
   - pre_commit
+  - tf_check
+  - tf_plan
+  - tf_update_review
 
 variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
+  CI_TF_IMAGE: hashicorp/terraform:1.8.5
 
 default:
   image: alpine:3.20.2
@@ -23,32 +28,5 @@ include:
 analyze_pre_commit:
   stage: pre_commit
   image: $CI_PYTHON_IMAGE
-  before_script:
-    - apt update -qy
-    - apt install -qy curl git
-    - apt-get install -qy --no-install-recommends apt-transport-https gnupg lsb-release
-    - curl -L https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor > /usr/share/keyrings/trivy.gpg
-    - echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" > /etc/apt/sources.list.d/trivy.list
-    - apt-get update
-    - apt-get install -qy trivy
-  script:
-    - python3 -m pip install --upgrade pip
-    - python3 -m pip install pre-commit
-    - pre-commit run
-  variables:
-    ENV: pre_commit
-    PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-    PIP_ROOT_USER_ACTION: ignore
-    PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
-    TRIVY_NO_PROGRESS: "true"
-    TRIVY_CACHE_DIR: ".trivycache/"
-  cache:
-    - key: pip
-      paths:
-        - ${PIP_CACHE_DIR}
-    - key: pre-commit
-      paths:
-        - ${PRE_COMMIT_HOME}
-    - key: trivy
-      paths:
-        - ${TRIVY_CACHE_DIR}
+  extends:
+    - .pre_commit_check
