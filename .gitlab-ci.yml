@@ -16,6 +16,7 @@ stages:
 variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
   CI_TF_IMAGE: debian:bookworm-slim
+  AWS_REGION: eu-west-2
   DEBIAN_FRONTEND: noninteractive
   PRODUCT_NAME: labs
   TF_HTTP_LOCK_METHOD: 'POST'
