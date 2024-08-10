@@ -16,3 +16,9 @@ path = ".terraform-version"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "Stuart Ellis"
 SPDX-License-Identifier = "CC0-1.0"
+
+[[annotations]]
+path = ".tool-versions"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Stuart Ellis"
+SPDX-License-Identifier = "CC0-1.0"
