@@ -20,7 +20,6 @@
     - python3 -m pip install pre-commit
     - pre-commit run
   variables:
-    ENV: pre_commit
     PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
     PIP_ROOT_USER_ACTION: ignore
     PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
