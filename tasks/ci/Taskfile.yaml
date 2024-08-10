@@ -15,7 +15,7 @@ tasks:
   install-core:
     desc: "Install core tools on Debian"
     cmds:
-      - apt update -qy && apt install -qy curl git
+      - apt-get update -qy && apt-get install -qy curl git
       - apt-get install -qy --no-install-recommends apt-transport-https gnupg lsb-release
 
   install-terraform:
@@ -23,7 +23,7 @@ tasks:
     cmds:
       - curl -L https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
       - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
-      - apt update -qy && apt install -qy terraform=$(grep .terraform-version)
+      - apt-get update -qy && apt-get install -qy terraform=$(grep .terraform-version)
 
   install-trivy:
     desc: "Install latest Trivy on Debian"
