@@ -117,6 +117,13 @@ tasks:
     requires:
       vars: [ENV, STACK]
 
+  test:
+    desc: Test stack
+    cmds:
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} test"
+    requires:
+      vars: [ENV, STACK]
+
   validate:
     desc: Validate stack
     cmds:
