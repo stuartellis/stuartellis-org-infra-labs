@@ -9,7 +9,7 @@
 stages:
   - secret_detection
   - pre_commit
-  - tf_check
+  - tf_validate
   - tf_plan
   - tf_update_review
 
@@ -31,3 +31,14 @@ analyze_pre_commit:
   image: $CI_PYTHON_IMAGE
   extends:
     - .pre_commit_check
+
+stack_validate_core-config:
+  stage: tf_validate
+  image: $CI_TF_IMAGE
+  extends:
+    - .stack_base
+    - .stack_validate
+  variables:
+    ENV: dev
+    STACK: core-config
+    VARIANT: default

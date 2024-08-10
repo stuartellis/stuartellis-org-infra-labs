@@ -6,31 +6,27 @@
 #
 # See: https://docs.gitlab.com/ee/ci/pipelines/
 
-.tf_base:
+.stack_base:
   before_script:
     - apk add go-task
-  variables:
-    ENV: $STACK_ENV
-    STACK: $STACK_NAME
-    VARIANT: $STACK_VARIANT
 
-.tf_apply:
+.stack_apply:
   script:
     - go-task stack:apply
 
-.tf_check:
-  script:
-    - go-task stack:check-fmt
-    - go-task stack:validate
-
-.tf_destroy:
+.stack_destroy:
   script:
     - go-task stack:destroy
 
-.tf_plan:
+.stack_plan:
   script:
     - go-task stack:plan
 
-.tf_test:
+.stack_test:
   script:
     - go-task stack:test
+
+.stack_validate:
+  script:
+    - go-task stack:check-fmt
+    - go-task stack:validate
