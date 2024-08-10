@@ -16,6 +16,7 @@ stages:
 variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
   CI_TF_IMAGE: debian:bookworm-slim
+  DEBIAN_FRONTEND: noninteractive
 
 default:
   image: alpine:3.20.2
