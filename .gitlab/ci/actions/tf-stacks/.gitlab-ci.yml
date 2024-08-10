@@ -10,7 +10,7 @@
   before_script:
     - apt-get update -qy && apt-get install -qy curl git
     - apt-get install -qy --no-install-recommends apt-transport-https gnupg lsb-release
-    - ./scripts/install-task.sh -b $HOME/bin $(grep '.tool-versions' | cut -d ' ' -f 2)
+    - ./scripts/install-task.sh -b /usr/local/bin $(grep '.tool-versions' | cut -d ' ' -f 2)
     - task ci:install-terraform
 
 .stack_apply:
