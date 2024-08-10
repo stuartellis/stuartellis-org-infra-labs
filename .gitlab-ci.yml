@@ -21,6 +21,7 @@ default:
   image: alpine:3.20.2
 
 include:
+  - local: ".gitlab/ci/actions/**/.gitlab-ci.yml"
   - component: gitlab.com/components/secret-detection/secret-detection@1.1.2
     inputs:
       stage: secret_detection
