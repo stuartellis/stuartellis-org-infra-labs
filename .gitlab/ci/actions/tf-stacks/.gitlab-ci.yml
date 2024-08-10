@@ -23,13 +23,16 @@
 
 .stack_plan:
   script:
+    - task stack:init
     - task stack:plan
 
 .stack_test:
   script:
+    - task stack:init
     - task stack:test
 
 .stack_validate:
   script:
+    - task stack:init
     - task stack:check-fmt
     - task stack:validate

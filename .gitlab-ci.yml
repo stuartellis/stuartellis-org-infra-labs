@@ -17,6 +17,15 @@ variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
   CI_TF_IMAGE: debian:bookworm-slim
   DEBIAN_FRONTEND: noninteractive
+  PRODUCT_NAME: labs
+  TF_HTTP_LOCK_METHOD: 'POST'
+  TF_HTTP_UNLOCK_METHOD: 'DELETE'
+  TF_HTTP_USERNAME: "gitlab-ci-token"
+  TF_HTTP_PASSWORD: $CI_JOB_TOKEN
+  TF_HTTP_RETRY_WAIT_MIN: '5'
+  TF_INPUT: '0'
+  TF_IN_AUTOMATION: 'true'
+
 
 default:
   image: alpine:3.20.2
