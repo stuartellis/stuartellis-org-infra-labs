@@ -15,7 +15,7 @@ stages:
 
 variables:
   CI_PYTHON_IMAGE: python:3.12.4-slim-bookworm
-  CI_TF_IMAGE: hashicorp/terraform:1.8.5
+  CI_TF_IMAGE: debian:bookworm-slim
 
 default:
   image: alpine:3.20.2

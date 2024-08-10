@@ -11,6 +11,7 @@ version: "3"
 silent: true
 
 includes:
+  ci: tasks/ci
   pre-commit: tasks/pre-commit
   project: tasks/project
   stack: tasks/tf-stacks

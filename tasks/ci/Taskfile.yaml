@@ -1,0 +1,35 @@
+# SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
+#
+# SPDX-License-Identifier: MIT
+#
+# Project tasks for the Task runner:
+#
+# https://taskfile.dev/
+
+version: "3"
+
+silent: true
+
+tasks:
+
+  install-core:
+    desc: "Install core tools on Debian"
+    cmds:
+      - apt update -qy && apt install -qy curl git
+      - apt-get install -qy --no-install-recommends apt-transport-https gnupg lsb-release
+
+  install-terraform:
+    desc: "Install Terraform on Debian"
+    deps: [install-core]
+    cmds:
+      - curl -L https://apt.releases.hashicorp.com/gpg | gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+      - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list
+      - apt update -qy && apt install -qy terraform=$(grep .terraform-version)
+
+  install-trivy:
+    desc: "Install latest Trivy on Debian"
+    deps: [install-core]
+    cmds:
+      - curl -L https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor > /usr/share/keyrings/trivy.gpg
+      - echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" > /etc/apt/sources.list.d/trivy.list
+      - apt-get update && apt-get install -qy trivy

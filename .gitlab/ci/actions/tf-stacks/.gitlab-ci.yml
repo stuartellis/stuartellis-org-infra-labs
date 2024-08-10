@@ -8,25 +8,26 @@
 
 .stack_base:
   before_script:
-    - apk add go-task
+    - ./scripts/install-task.sh -b $HOME/.local/bin $(grep '.tool-versions | cut -d ' ' -f 2)
+    - task ci:install-terraform
 
 .stack_apply:
   script:
-    - go-task stack:apply
+    - task stack:apply
 
 .stack_destroy:
   script:
-    - go-task stack:destroy
+    - task stack:destroy
 
 .stack_plan:
   script:
-    - go-task stack:plan
+    - task stack:plan
 
 .stack_test:
   script:
-    - go-task stack:test
+    - task stack:test
 
 .stack_validate:
   script:
-    - go-task stack:check-fmt
-    - go-task stack:validate
+    - task stack:check-fmt
+    - task stack:validate
