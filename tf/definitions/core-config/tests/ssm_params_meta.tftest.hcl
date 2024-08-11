@@ -11,7 +11,7 @@ run "setup" {
 }
 
 run "match_expected_meta_params" {
-  command = plan
+  command = apply
 
   variables {
     variant = run.setup.random_variant_name
