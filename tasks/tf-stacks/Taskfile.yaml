@@ -61,6 +61,7 @@ tasks:
     desc: Check formatting of TF code for stack
     cmds:
       - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt -check -diff -recursive"
+
     requires:
       vars: [STACK]
 
@@ -74,7 +75,8 @@ tasks:
   fmt:
     desc: Format code for stack
     cmds:
-      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt"
+      - "{{.TF_CLI_EXE}} {{.TF_CLI_CHDIR_OPT}} fmt -recursive"
+      - "{{.TF_CLI_EXE}} fmt {{.TF_CLI_ENVS_DIR}}/**/{{.STACK}}.tfvars"
     requires:
       vars: [STACK]
 
