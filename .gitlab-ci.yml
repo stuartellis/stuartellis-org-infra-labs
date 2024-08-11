@@ -10,6 +10,7 @@ stages:
   - secret_detection
   - pre_commit
   - tf_validate
+  - tf_test
   - tf_plan
   - tf_update_review
 
@@ -55,7 +56,7 @@ stack_validate_core-config:
     VARIANT: default
 
 stack_test_core-config:
-  stage: tf_validate
+  stage: tf_test
   image: $CI_TF_IMAGE
   extends:
     - .stack_base
