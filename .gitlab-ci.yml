@@ -53,3 +53,14 @@ stack_validate_core-config:
     ENV: dev
     STACK: core-config
     VARIANT: default
+
+stack_test_core-config:
+  stage: tf_validate
+  image: $CI_TF_IMAGE
+  extends:
+    - .stack_base
+    - .stack_test
+  variables:
+    ENV: dev
+    STACK: core-config
+    VARIANT: default
